@@ -1,0 +1,35 @@
+<form class="flexcol {{cssClass}}" autocomplete="off">
+    {{!-- Sheet Header --}}
+    <header class="sheet-header">
+        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
+        <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name" /></h1>
+    </header>
+
+    {{#if isCharacter}}
+        {{!-- Sheet Tab Navigation --}}
+        <nav class="sheet-tabs tabs" data-group="primary">
+            <a class="item" data-tab="tab_one">Tab One</a>
+            <a class="item" data-tab="tab_two">Tab Two</a>
+            <a class="item" data-tab="tab_three">Tab Three</a>
+        </nav>
+
+        {{!-- Sheet Body --}}
+        <section class="sheet-body">
+
+            {{!-- Biography Tab --}}
+            <div class="tab" data-group="primary" data-tab="tab_one">
+            </div>
+
+            {{!-- Owned Items Tab --}}
+            <div class="tab" data-group="primary" data-tab="tab_two">
+            </div>
+
+            {{!-- Attributes Tab --}}
+            <div class="tab" data-group="primary" data-tab="attributes">
+            </div>
+        </section>
+    {{/if}}
+    {{#if isNpc}}
+        <input type="number" name="data.vegetable" value="{{data.vegetable}}" />
+    {{/if}}
+</form>

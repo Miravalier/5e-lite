@@ -1,0 +1,16 @@
+{
+  "name": "SFS",
+  "version": "0.0.1",
+  "description": "Sci-Fi Shooter Ruleset",
+  "scripts": {
+    "css": "css"
+  },
+  "browserslist": [
+    "last 3 versions"
+  ],
+  "author": "Miravalier",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {}
+}
