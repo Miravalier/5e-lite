@@ -1,3 +1,3 @@
 # SFS Ruleset
 
-Sci-Fi Shooter ruleset.
+Sci-Fi Shooter ruleset for Foundry VTT.
