@@ -1,13 +1,13 @@
 /**
  * @extends {ActorSheet}
  */
-export class SfsCharacterSheet extends ActorSheet {
+export class DndCharacterSheet extends ActorSheet {
 
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["sfs", "sheet", "actor"],
-      template: "systems/sfs/templates/actor-sheet.html",
+      classes: ["dnd", "sheet", "actor"],
+      template: "systems/5e-lite/templates/actor-sheet.html",
       width: 600,
       height: 600,
       tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "tab_one"}],
@@ -44,13 +44,13 @@ export class SfsCharacterSheet extends ActorSheet {
 
 }
 
-export class SfsNpcSheet extends ActorSheet {
+export class DndNpcSheet extends ActorSheet {
 
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["sfs", "sheet", "actor"],
-      template: "systems/sfs/templates/actor-sheet.html",
+      classes: ["dnd", "sheet", "actor"],
+      template: "systems/5e-lite/templates/actor-sheet.html",
       width: 600,
       height: 600,
       tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "tab_one"}],

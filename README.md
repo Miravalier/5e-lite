@@ -1,3 +1,3 @@
-# SFS Ruleset
+# 5E-Lite Ruleset
 
-Sci-Fi Shooter ruleset for Foundry VTT.
+Stripped down one-shot 5e based ruleset for Foundry VTT.

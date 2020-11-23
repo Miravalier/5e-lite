@@ -1,7 +1,7 @@
 /**
  * @extends {Actor}
  */
-export class SfsActor extends Actor {
+export class DndActor extends Actor {
   /** @override */
   prepareData() {
     super.prepareData();

@@ -1,14 +1,14 @@
 /**
- * SFS ruleset.
+ * 5E-Lite ruleset.
  * Author: Miravalier
  * Software License: GNU GPLv3
  */
 
 // Import Modules
-import { SfsActor } from "./actor.js";
-import { SfsItem } from "./item.js";
-import { SfsItemSheet } from "./item-sheet.js";
-import { SfsCharacterActorSheet, SfsNpcActorSheet } from "./actor-sheet.js";
+import { DndActor } from "./actor.js";
+import { DndItem } from "./item.js";
+import { DndItemSheet } from "./item-sheet.js";
+import { DndCharacterActorSheet, DndNpcActorSheet } from "./actor-sheet.js";
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -18,27 +18,27 @@ import { SfsCharacterActorSheet, SfsNpcActorSheet } from "./actor-sheet.js";
  * Init hook.
  */
 Hooks.once("init", async function() {
-    console.log(`Initializing SFS ruleset.`);
+    console.log(`Initializing 5E-Lite ruleset.`);
 
     CONFIG.Combat.initiative = {
         formula: "1d20",
         decimals: 0
     };
 
-    game.sfs = {
+    game.dnd = {
 
     };
 
     // Define custom Entity classes
-    CONFIG.Actor.entityClass = SfsActor;
-    CONFIG.Item.entityClass = SfsItem;
+    CONFIG.Actor.entityClass = DndActor;
+    CONFIG.Item.entityClass = DndItem;
 
     // Register sheet application classes
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("sfs", SfsCharacterActorSheet, { makeDefault: true });
-    Actors.registerSheet("sfs", SfsNpcActorSheet, { makeDefault: true });
+    Actors.registerSheet("dnd", DndCharacterActorSheet, { makeDefault: true });
+    Actors.registerSheet("dnd", DndNpcActorSheet, { makeDefault: true });
     Items.unregisterSheet("core", ItemSheet);
-    Items.registerSheet("sfs", SfsItemSheet, { makeDefault: true });
+    Items.registerSheet("dnd", DndItemSheet, { makeDefault: true });
 
     // Register handlebars helpers.
     /**

@@ -1,14 +1,14 @@
-.sfs .window-content {
+.dnd .window-content {
   height: 100%;
   padding: 5px;
   overflow-y: hidden;
 }
 
-.sfs form {
+.dnd form {
   height: 100%;
 }
 
-.sfs .sheet-header {
+.dnd .sheet-header {
   flex: 0 0 100px;
   overflow: hidden;
   display: flex;
@@ -18,56 +18,56 @@
   margin-bottom: 10px;
 }
 
-.sfs .sheet-header .profile-img {
+.dnd .sheet-header .profile-img {
   flex: 0 0 100px;
   height: 100px;
   margin-right: 10px;
 }
 
-.sfs .sheet-header h1.charname {
+.dnd .sheet-header h1.charname {
   height: 50px;
   padding: 0px;
   margin: 5px 0;
   border-bottom: 0;
 }
 
-.sfs .sheet-header h1.charname input {
+.dnd .sheet-header h1.charname input {
   width: 100%;
   height: 100%;
   margin: 0;
 }
 
-.sfs .tabs {
+.dnd .tabs {
   flex: 0 0 40px;
   border-top: 1px solid #AAA;
   border-bottom: 1px solid #AAA;
 }
 
-.sfs .tabs .item {
+.dnd .tabs .item {
   line-height: 40px;
   font-weight: bold;
 }
 
-.sfs .tabs .item.active {
+.dnd .tabs .item.active {
   text-decoration: underline;
   text-shadow: none;
 }
 
-.sfs .sheet-body {
+.dnd .sheet-body {
   overflow: hidden;
 }
 
-.sfs .sheet-body .tab {
+.dnd .sheet-body .tab {
   height: 100%;
   overflow-y: auto;
 }
 
-.sfs.sheet.actor {
+.dnd.sheet.actor {
   min-width: 560px;
   min-height: 420px;
 }
 
-.sfs.sheet.item {
+.dnd.sheet.item {
   min-width: 460px;
   min-height: 400px;
 }

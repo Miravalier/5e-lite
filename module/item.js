@@ -1,7 +1,7 @@
 /**
  * @extends {Item}
  */
-export class SfsItem extends Item {
+export class DndItem extends Item {
   /** @override */
   prepareData() {
     super.prepareData();

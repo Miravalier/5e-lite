@@ -1,7 +1,7 @@
 {
-  "name": "SFS",
+  "name": "5E-Lite",
   "version": "0.0.1",
-  "description": "Sci-Fi Shooter Ruleset",
+  "description": "One-shot stripped down 5E.",
   "scripts": {
     "css": "css"
   },
