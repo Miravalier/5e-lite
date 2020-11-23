@@ -1,2 +1,2 @@
 update:
-	sudo service sizlak.foundry restart
+	sudo service miravalier.foundry restart

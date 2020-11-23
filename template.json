@@ -2,17 +2,20 @@
     "Actor": {
         "types": ["Character", "NPC"],
 
-        "NPC": {
+        "Character": {
         },
 
-        "Character": {
+        "NPC": {
         }
     },
 
     "Item": {
-        "types": ["Gun", "Consumable"],
+        "types": ["Spell", "Weapon", "Consumable"],
 
-        "Gun": {
+        "Spell": {
+        },
+
+        "Weapon": {
         },
 
         "Consumable": {
