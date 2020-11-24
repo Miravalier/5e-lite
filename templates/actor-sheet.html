@@ -2,7 +2,15 @@
     {{!-- Sheet Header --}}
     <header class="sheet-header">
         <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
-        <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name" /></h1>
+        <div>
+            {{#if isNPC}}
+            <label>NPC</label>
+            {{/if}}
+            {{#if isCharacter}}
+            <label>Player</label>
+            {{/if}}
+            <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name" /></h1>
+        </div>
     </header>
 
     {{!-- Sheet Tab Navigation --}}
@@ -87,12 +95,71 @@
 
         {{!-- Background Tab --}}
         <div class="tab" data-group="primary" data-tab="background_tab">
+            {{#if isCharacter}}
+            <div class="race-field">
+                <label>Race</label>
+                <select name="data.race">
+                    {{#select data.race}}
+                    <option value="Dragonborn">Dragonborn</option>
+                    <option value="Dwarf">Dwarf</option>
+                    <option value="Elf">Elf</option>
+                    <option value="Gnome">Gnome</option>
+                    <option value="Half-Elf">Half-Elf</option>
+                    <option value="Halfling">Halfling</option>
+                    <option value="Half-Orc">Half-Orc</option>
+                    <option value="Human">Human</option>
+                    <option value="Tiefling">Tiefling</option>
+                    <option value="Leonin">Leonin</option>
+                    <option value="Satyr">Satyr</option>
+                    <option value="Aarakocra">Aarakocra</option>
+                    <option value="Genasi">Genasi</option>
+                    <option value="Goliath">Goliath</option>
+                    <option value="Aasimar">Aasimar</option>
+                    <option value="Tabaxi">Tabaxi</option>
+                    <option value="Triton">Triton</option>
+                    <option value="Centaur">Centaur</option>
+                    <option value="Warforged">Warforged</option>
+                    {{/select}}
+                </select>
+                <input type="text" class="race-info" disabled></label>
+            </div>
+            <div class="class-field">
+                <label>Class</label>
+                <select name="data.class">
+                    {{#select data.class}}
+                    <option value="Artificer">Artificer</option>
+                    <option value="Barbarian">Barbarian</option>
+                    <option value="Bard">Bard</option>
+                    <option value="Cleric">Cleric</option>
+                    <option value="Druid">Druid</option>
+                    <option value="Fighter">Fighter</option>
+                    <option value="Monk">Monk</option>
+                    <option value="Paladin">Paladin</option>
+                    <option value="Ranger">Ranger</option>
+                    <option value="Rogue">Rogue</option>
+                    <option value="Sorcerer">Sorcerer</option>
+                    <option value="Warlock">Warlock</option>
+                    <option value="Wizard">Wizard</option>
+                    {{/select}}
+                </select>
+                <input type="text" class="class-info" disabled></label>
+            </div>
+            {{/if}}
+            {{#if isNPC}}
+            <div class="race-field">
+                <label>Race</label>
+                <input type="text" name="data.race" value="{{data.race}}"/>
+            </div>
+            {{/if}}
+            <div class="subjective-pronoun-field">
+                <label>Subjective Pronoun (e.g. he, she, they)</label>
+                <input type="text" name="data.subjective_pronoun" value="{{data.subjective_pronoun}}"/>
+            </div>
+            <div class="possessive-pronoun-field">
+                <label>Possessive Pronoun (e.g. his, her, their)</label>
+                <input type="text" name="data.posessive_pronoun" value="{{data.possessive_pronoun}}"/>
+            </div>
         </div>
 
     </section>
-
-<!--
-    {{#if isCharacter}}
-    {{/if}}
--->
 </form>

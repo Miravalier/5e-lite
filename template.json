@@ -16,7 +16,8 @@
             "max_hp": 25,
             "race": "",
             "class": "",
-            "background": ""
+            "subjective_pronoun": "they",
+            "possessive_pronoun": "their"
         },
 
         "NPC": {
@@ -31,7 +32,9 @@
             "speed": 30,
             "hp": 10,
             "max_hp": 10,
-            "race": ""
+            "race": "",
+            "subjective_pronoun": "they",
+            "possessive_pronoun": "their"
         }
     },
 

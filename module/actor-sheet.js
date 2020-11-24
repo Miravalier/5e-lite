@@ -20,7 +20,7 @@ export class DndCharacterSheet extends ActorSheet {
   getData() {
     const data = super.getData();
     data.isCharacter = true;
-    data.isNpc = false;
+    data.isNPC = false;
     return data;
   }
 
@@ -103,7 +103,7 @@ export class DndNpcSheet extends DndCharacterSheet {
   getData() {
     const data = super.getData();
     data.isCharacter = false;
-    data.isNpc = true;
+    data.isNPC = true;
     return data;
   }
 
