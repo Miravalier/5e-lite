@@ -10,7 +10,7 @@ export class DndCharacterSheet extends ActorSheet {
       template: "systems/5e-lite/templates/actor-sheet.html",
       width: 600,
       height: 600,
-      tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "tab_one"}],
+      tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "stats_tab"}],
     });
   }
 
@@ -33,6 +33,46 @@ export class DndCharacterSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
     if ( !this.options.editable ) return;
 
+    html.find('.inventory-item .use').click(ev => {
+        const node = $(ev.currentTarget).parents(".inventory-item");
+        const item = this.actor.getOwnedItem(node.data("itemId"));
+        console.log(item);
+    });
+
+    html.find('.inventory-item .edit').click(ev => {
+        const node = $(ev.currentTarget).parents(".inventory-item");
+        const item = this.actor.getOwnedItem(node.data("itemId"));
+        item.sheet.render(true);
+    });
+
+    html.find('.inventory-item .delete').click(ev => {
+        const node = $(ev.currentTarget).parents(".inventory-item");
+        this.actor.deleteOwnedItem(node.data("itemId"));
+    });
+
+    html.find('.new-item').click(async ev => {
+        const node = $(ev.currentTarget);
+        const content = await renderTemplate("systems/5e-lite/templates/item-create.html");
+        Dialog.confirm({
+            title: "Create Item / Ability",
+            content: content,
+            yes: html => {
+                const form = html[0].querySelector("form");
+                let name = form.name.value;
+                let type = form.type.value;
+                if (!name)
+                {
+                    name = `New ${type}`;
+                }
+                this.actor.createOwnedItem({
+                    name: name,
+                    type: type
+                });
+            },
+            no: () => {},
+            defaultYes: false
+        });
+    });
   }
 
   /* -------------------------------------------- */
@@ -44,7 +84,7 @@ export class DndCharacterSheet extends ActorSheet {
 
 }
 
-export class DndNpcSheet extends ActorSheet {
+export class DndNpcSheet extends DndCharacterSheet {
 
   /** @override */
   static get defaultOptions() {
@@ -53,7 +93,7 @@ export class DndNpcSheet extends ActorSheet {
       template: "systems/5e-lite/templates/actor-sheet.html",
       width: 600,
       height: 600,
-      tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "tab_one"}],
+      tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "stats_tab"}],
     });
   }
 

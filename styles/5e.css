@@ -71,3 +71,116 @@
   min-width: 460px;
   min-height: 400px;
 }
+
+.chat-template.caption {
+    color: white;
+    text-shadow: 2px 2px black;
+    padding: 3px;
+    background-color: rgba(120, 120, 120, 0.5);
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-weight: bold;
+}
+.chat-template.caption > * {
+    margin: 4px;
+}
+.chat-template.caption > img {
+    border-radius: 4px;
+}
+.chat-template.item {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid rgba(120, 120, 120, 0.5);
+}
+.chat-template.item > * {
+    margin: 4px;
+}
+.chat-template.list {
+    border-radius: 5px;
+    background-color: rgba(200, 200, 200, 0.5);
+}
+.chat-template.label {
+    margin: 0;
+    font-weight: bold;
+    width: 50%;
+    text-align: center;
+}
+.chat-template.roll {
+    margin: 0;
+    display: flex;
+    width: 50%;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+.chat-template.roll .chat-template.formula {
+    width: 100%;
+    text-align: center;
+    padding: 4px;
+    color: rgba(128, 128, 128, 0.75);
+    display: none;
+}
+.chat-template.roll .chat-template.total {
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    padding: 4px;
+    background-color: rgba(120, 120, 120, 0.1);
+    font-weight: bold;
+    border: 2px solid rgba(120, 120, 120, 0.5);
+    border-radius: 4px;
+}
+
+div.dnd.system {
+    color: #000000;
+    background-color: rgba(100, 100, 100, 0.5);
+    padding: 2px;
+    border-radius: 4px;
+}
+
+div.dnd.emote,
+div.dnd.narrate {
+    color: green;
+    font-style: italic;
+}
+
+div.dnd.story {
+    color: crimson;
+    text-shadow: 1px 1px 0 black;
+}
+
+div.dnd.ooc {
+    color: grey;
+    background: lightgrey;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+img.inline-img {
+    display: inline;
+    margin: 0 5px;
+    vertical-align: middle;
+    border: none;
+}
+
+img.dnd.emoji {
+    display: inline;
+    margin: 2px;
+    vertical-align: middle;
+    border: none;
+}
+
+#chat-controls .roll-type-select,
+#chat-controls .chat-control-icon {
+    display: none;
+}
+
+#pause img {
+    content:url("../images/pause.png");
+    animation: none;
+}

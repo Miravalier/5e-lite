@@ -3,9 +3,35 @@
         "types": ["Character", "NPC"],
 
         "Character": {
+            "strength": 10,
+            "dexterity": 10,
+            "constitution": 10,
+            "intelligence": 10,
+            "wisdom": 10,
+            "charisma": 10,
+            "ac": 10,
+            "initiative": 0,
+            "speed": 30,
+            "hp": 25,
+            "max_hp": 25,
+            "race": "",
+            "class": "",
+            "background": ""
         },
 
         "NPC": {
+            "strength": 10,
+            "dexterity": 10,
+            "constitution": 10,
+            "intelligence": 10,
+            "wisdom": 10,
+            "charisma": 10,
+            "ac": 10,
+            "initiative": 0,
+            "speed": 30,
+            "hp": 10,
+            "max_hp": 10,
+            "race": ""
         }
     },
 

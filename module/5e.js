@@ -8,7 +8,12 @@
 import { DndActor } from "./actor.js";
 import { DndItem } from "./item.js";
 import { DndItemSheet } from "./item-sheet.js";
-import { DndCharacterActorSheet, DndNpcActorSheet } from "./actor-sheet.js";
+import { DndCharacterSheet, DndNpcSheet } from "./actor-sheet.js";
+
+import { onCreateChatMessage } from "./chat.js";
+import { onChatExport } from "./chat.js";
+import { preChatMessage } from "./chat.js";
+import { ErrorMessage } from "./chat.js";
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -26,7 +31,8 @@ Hooks.once("init", async function() {
     };
 
     game.dnd = {
-
+        emoji: {
+        }
     };
 
     // Define custom Entity classes
@@ -35,8 +41,8 @@ Hooks.once("init", async function() {
 
     // Register sheet application classes
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("dnd", DndCharacterActorSheet, { makeDefault: true });
-    Actors.registerSheet("dnd", DndNpcActorSheet, { makeDefault: true });
+    Actors.registerSheet("dnd", DndCharacterSheet, { makeDefault: true });
+    Actors.registerSheet("dnd", DndNpcSheet, { makeDefault: true });
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet("dnd", DndItemSheet, { makeDefault: true });
 
@@ -46,4 +52,10 @@ Hooks.once("init", async function() {
             return value;
         });
     */
+});
+
+Hooks.once("ready", function() {
+    Hooks.on("renderChatMessage", (app, html, data) => onCreateChatMessage(html, data));
+    Hooks.on("chatMessage", (chatLog, message, chatData) => preChatMessage(chatLog, message, chatData));
+    Messages.prototype.export = onChatExport;
 });

@@ -5,31 +5,94 @@
         <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name" /></h1>
     </header>
 
+    {{!-- Sheet Tab Navigation --}}
+    <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="stats_tab">Stats</a>
+        <a class="item" data-tab="items_tab">Items and Abilities</a>
+        <a class="item" data-tab="background_tab">Background</a>
+    </nav>
+
+    {{!-- Sheet Body --}}
+    <section class="sheet-body">
+
+        {{!-- Stats Tab --}}
+        <div class="tab" data-group="primary" data-tab="stats_tab">
+            <div class="ability-scores">
+                <div class="attribute">
+                    <label>Strength</label>
+                    <input type="number" name="data.strength" value="{{data.strength}}"/>
+                </div>
+                <div class="attribute">
+                    <label>Dexterity</label>
+                    <input type="number" name="data.dexterity" value="{{data.dexterity}}"/>
+                </div>
+                <div class="attribute">
+                    <label>Constitution</label>
+                    <input type="number" name="data.constitution" value="{{data.constitution}}"/>
+                </div>
+                <div class="attribute">
+                    <label>Intelligence</label>
+                    <input type="number" name="data.intelligence" value="{{data.intelligence}}"/>
+                </div>
+                <div class="attribute">
+                    <label>Wisdom</label>
+                    <input type="number" name="data.wisdom" value="{{data.wisdom}}"/>
+                </div>
+                <div class="attribute">
+                    <label>Charisma</label>
+                    <input type="number" name="data.charisma" value="{{data.charisma}}"/>
+                </div>
+            </div>
+
+            <div class="misc-stats">
+                <div class="stat">
+                    <label>Armor Class</label>
+                    <input type="number" name="data.ac" value="{{data.ac}}"/>
+                </div>
+                <div class="stat">
+                    <label>Initiative</label>
+                    <input type="number" name="data.initiative" value="{{data.initiative}}"/>
+                </div>
+                <div class="stat">
+                    <label>Speed</label>
+                    <input type="number" name="data.speed" value="{{data.speed}}"/>
+                </div>
+            </div>
+
+            <div class="vitals">
+                <label>HP</label>
+                <div class="stat">
+                    <label>Current</label>
+                    <input type="number" name="data.hp" value="{{data.hp}}"/>
+                </div>
+                <div class="stat">
+                    <label>Max</label>
+                    <input type="number" name="data.max_hp" value="{{data.max_hp}}"/>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Items and Abilities Tab --}}
+        <div class="tab" data-group="primary" data-tab="items_tab">
+            {{#each actor.items as |item id|}}
+                <div class="inventory-item" data-item-id="{{item._id}}">
+                    <label>{{item.name}}</label>
+                    <button class="use">Use</button>
+                    <button class="edit">Edit</button>
+                    <button class="delete">Delete</button>
+                </div>
+            {{/each}}
+            <button class="new-item">New Item / Ability</button>
+        </div>
+
+        {{!-- Background Tab --}}
+        <div class="tab" data-group="primary" data-tab="background_tab">
+        </div>
+
+    </section>
+
+<!--
     {{#if isCharacter}}
-        {{!-- Sheet Tab Navigation --}}
-        <nav class="sheet-tabs tabs" data-group="primary">
-            <a class="item" data-tab="tab_one">Tab One</a>
-            <a class="item" data-tab="tab_two">Tab Two</a>
-            <a class="item" data-tab="tab_three">Tab Three</a>
-        </nav>
-
-        {{!-- Sheet Body --}}
-        <section class="sheet-body">
-
-            {{!-- Biography Tab --}}
-            <div class="tab" data-group="primary" data-tab="tab_one">
-            </div>
-
-            {{!-- Owned Items Tab --}}
-            <div class="tab" data-group="primary" data-tab="tab_two">
-            </div>
-
-            {{!-- Attributes Tab --}}
-            <div class="tab" data-group="primary" data-tab="attributes">
-            </div>
-        </section>
     {{/if}}
-    {{#if isNpc}}
-        <input type="number" name="data.vegetable" value="{{data.vegetable}}" />
-    {{/if}}
+-->
 </form>
