@@ -7,17 +7,55 @@
 
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
-        <a class="item" data-tab="tab_one">Tab One</a>
-        <a class="item" data-tab="tab_two">Tab Two</a>
+        <a class="item" data-tab="description_tab">Description</a>
+        <a class="item" data-tab="attributes_tab">Attributes</a>
     </nav>
 
     {{!-- Sheet Body --}}
     <section class="sheet-body">
 
-        <div class="tab" data-group="primary" data-tab="tab_one">
+        <div class="tab" data-group="primary" data-tab="description_tab">
+            {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
         </div>
 
-        <div class="tab" data-group="primary" data-tab="tab_two">
+        <div class="tab" data-group="primary" data-tab="attributes_tab">
+            <div class="mana-cost">
+                <label>Mana Cost</label>
+                <input type="text" name="data.cost" value="{{data.cost}}" />
+            </div>
+            <div class="template">
+                <header class="header">
+                    <span class="label">Attribute</span>
+                    <span class="formula">Formula</span>
+                    <a class="add-button" data-action="create"><i class="fas fa-plus"></i></a>
+                </header>
+                <div class="list">
+                {{#each data.template as |item key|}}
+                    <div class="row" data-key="{{key}}">
+                        <input class="label" type="text" name="data.template.{{key}}.label"
+                            value="{{item.label}}"/>
+                        <input class="formula" type="text" name="data.template.{{key}}.formula"
+                            value="{{item.formula}}"/>
+                        <a class="delete-button"><i class="fas fa-trash"></i></a>
+                    </div>
+                {{/each}}
+                </div>
+            </div>
+            <div class="phrases">
+                <header class="header">
+                    <span class="label">Usage Phrases</span>
+                    <a class="add-button" data-action="create"><i class="fas fa-plus"></i></a>
+                </header>
+                <div class="list">
+                {{#each data.usage_phrases as |item key|}}
+                    <div class="row" data-key="{{key}}">
+                        <input class="label" type="text" name="data.usage_phrases.{{key}}"
+                            value="{{item}}"/>
+                        <a class="delete-button"><i class="fas fa-trash"></i></a>
+                    </div>
+                {{/each}}
+                </div>
+            </div>
         </div>
 
     </section>

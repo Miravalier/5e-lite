@@ -202,16 +202,85 @@ form.item-create div.row {
 
 .dnd .inventory div.item label {
     flex: 1;
+    margin: 4px;
 }
 
 .dnd .inventory div.item button {
     flex: 0 0 0px;
 }
 
-.dnd .sheet-body .tab div {
-    padding: 4px;
-}
-
 .dnd.sheet nav.sheet-tabs {
     height: 40px;
+}
+
+.dnd .editor,
+.dnd .editor-content {
+    height: 100%;
+}
+
+.dnd .invisible {
+    display: none;
+}
+
+.dnd .mana-cost {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    padding: 2px;
+}
+
+.dnd .mana-cost label {
+    flex: 0 0 100px;
+}
+
+.dnd .mana-cost input {
+    flex: 1;
+}
+
+.dnd .header {
+    padding: 5px;
+    margin: 5px 0;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid #AAA;
+    border-radius: 2px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.dnd .header {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.dnd .header span {
+    flex: 1;
+    margin: 0px 4px;
+}
+
+.dnd .header .add-button {
+    margin: 0px 4px;
+}
+
+.dnd .list {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.dnd .list .row {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
+
+.dnd .list .row input {
+    flex: 1;
+    margin: 4px;
+}
+
+.dnd .list .row .delete-button {
+    margin: 4px;
+}
+
+.dnd .phrases .list .row input {
+    font-family: monospace;
 }

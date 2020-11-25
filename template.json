@@ -45,9 +45,9 @@
             "cost": 0,
             "description": "",
             "template": {},
-            "usage_phrases": [
-                "$CHARACTER_NAME:title casts $SPELL_NAME:title."
-            ]
+            "usage_phrases": {
+                "example": "$CHARACTER_NAME:title casts $SPELL_NAME:title."
+            }
         },
 
         "Passive Ability": {
@@ -62,9 +62,9 @@
 
         "Weapon": {
             "description": "",
-            "usage_phrases": [
-                "$CHARACTER_NAME:title swings $POSSESSIVE_PRONOUN:lower $WEAPON_NAME:lower at $TARGET_NAME:title."
-            ],
+            "usage_phrases": {
+                "example": "$CHARACTER_NAME:title swings $POSSESSIVE_PRONOUN:lower $WEAPON_NAME:lower at $TARGET_NAME:title."
+            },
             "two_handed": false,
             "damage_dice": "1d6",
             "damage_stat": "strength",
