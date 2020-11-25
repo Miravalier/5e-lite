@@ -42,8 +42,8 @@
         "types": ["Active Ability", "Passive Ability", "Consumable", "Weapon", "Miscellaneous"],
 
         "Active Ability": {
-            "cost": 0,
             "description": "",
+            "cost": 0,
             "template": {},
             "usage_phrases": {
                 "example": "$CHARACTER_NAME:title casts $SPELL_NAME:title."
@@ -51,12 +51,13 @@
         },
 
         "Passive Ability": {
+            "description": "",
             "triggers": {}
         },
 
         "Consumable": {
-            "quantity": 1,
             "description": "",
+            "quantity": 1,
             "template": {}
         },
 

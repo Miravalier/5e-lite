@@ -222,18 +222,18 @@ form.item-create div.row {
     display: none;
 }
 
-.dnd .mana-cost {
+.dnd .attribute {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     padding: 2px;
 }
 
-.dnd .mana-cost label {
+.dnd .attribute label {
     flex: 0 0 100px;
 }
 
-.dnd .mana-cost input {
+.dnd .attribute input {
     flex: 1;
 }
 
