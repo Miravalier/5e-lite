@@ -7,13 +7,20 @@
 // Import Modules
 import { DndActor } from "./actor.js";
 import { DndItem } from "./item.js";
-import { DndItemSheet } from "./item-sheet.js";
+import {
+    ActiveAbilitySheet,
+    PassiveAbilitySheet,
+    ConsumableSheet,
+    WeaponSheet,
+    MiscSheet
+} from "./item-sheet.js";
 import { DndCharacterSheet, DndNpcSheet } from "./actor-sheet.js";
-
-import { onCreateChatMessage } from "./chat.js";
-import { onChatExport } from "./chat.js";
-import { preChatMessage } from "./chat.js";
-import { ErrorMessage } from "./chat.js";
+import {
+    onCreateChatMessage,
+    onChatExport,
+    preChatMessage,
+    ErrorMessage
+} from "./chat.js";
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -44,7 +51,11 @@ Hooks.once("init", async function() {
     Actors.registerSheet("dnd", DndCharacterSheet, { makeDefault: true });
     Actors.registerSheet("dnd", DndNpcSheet, { makeDefault: true });
     Items.unregisterSheet("core", ItemSheet);
-    Items.registerSheet("dnd", DndItemSheet, { makeDefault: true });
+    Items.registerSheet("dnd", ActiveAbilitySheet, { makeDefault: true });
+    Items.registerSheet("dnd", PassiveAbilitySheet, { makeDefault: true });
+    Items.registerSheet("dnd", ConsumableSheet, { makeDefault: true });
+    Items.registerSheet("dnd", WeaponSheet, { makeDefault: true });
+    Items.registerSheet("dnd", MiscSheet, { makeDefault: true });
 
     // Register handlebars helpers.
     /**
