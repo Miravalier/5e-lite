@@ -33,21 +33,30 @@ export class DndCharacterSheet extends ActorSheet {
     // Everything below here is only needed if the sheet is editable
     if ( !this.options.editable ) return;
 
-    html.find('.inventory-item .use').click(ev => {
-        const node = $(ev.currentTarget).parents(".inventory-item");
+    html.find('.inventory .item .use').click(ev => {
+        const node = $(ev.currentTarget).parents(".item");
         const item = this.actor.getOwnedItem(node.data("itemId"));
         console.log(item);
     });
 
-    html.find('.inventory-item .edit').click(ev => {
-        const node = $(ev.currentTarget).parents(".inventory-item");
+    html.find('.inventory .item .edit').click(ev => {
+        const node = $(ev.currentTarget).parents(".item");
         const item = this.actor.getOwnedItem(node.data("itemId"));
         item.sheet.render(true);
     });
 
-    html.find('.inventory-item .delete').click(ev => {
-        const node = $(ev.currentTarget).parents(".inventory-item");
-        this.actor.deleteOwnedItem(node.data("itemId"));
+    html.find('.inventory .item .delete').click(ev => {
+        const node = $(ev.currentTarget).parents(".item");
+        const item = this.actor.getOwnedItem(node.data("itemId"));
+        Dialog.confirm({
+            title: `Delete ${item.name}?`,
+            content: "",
+            yes: html => {
+                this.actor.deleteOwnedItem(node.data("itemId"));
+            },
+            no: () => {},
+            defaultYes: false
+        });
     });
 
     html.find('.new-item').click(async ev => {

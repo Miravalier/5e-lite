@@ -185,3 +185,33 @@ img.dnd.emoji {
     content:url("../images/pause.png");
     animation: none;
 }
+
+form.item-create div.row {
+    padding: 4px;
+}
+
+.dnd .inventory div.item {
+    flex-flow: row nowrap;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.06);
+    margin: 4px;
+    border-radius: 2px;
+}
+
+.dnd .inventory div.item label {
+    flex: 1;
+}
+
+.dnd .inventory div.item button {
+    flex: 0 0 0px;
+}
+
+.dnd .sheet-body .tab div {
+    padding: 4px;
+}
+
+.dnd.sheet nav.sheet-tabs {
+    height: 40px;
+}

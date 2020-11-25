@@ -14,8 +14,8 @@
             "speed": 30,
             "hp": 25,
             "max_hp": 25,
-            "race": "",
-            "class": "",
+            "race": "Human",
+            "class": "Fighter",
             "subjective_pronoun": "they",
             "possessive_pronoun": "their"
         },
@@ -32,22 +32,48 @@
             "speed": 30,
             "hp": 10,
             "max_hp": 10,
-            "race": "",
+            "race": "Human",
             "subjective_pronoun": "they",
             "possessive_pronoun": "their"
         }
     },
 
     "Item": {
-        "types": ["Spell", "Weapon", "Consumable"],
+        "types": ["Active Ability", "Passive Ability", "Consumable", "Weapon", "Miscellaneous"],
 
-        "Spell": {
+        "Active Ability": {
+            "cost": 0,
+            "description": "",
+            "template": {},
+            "usage_phrases": [
+                "$CHARACTER_NAME:title casts $SPELL_NAME:title."
+            ]
         },
 
-        "Weapon": {
+        "Passive Ability": {
+            "triggers": {}
         },
 
         "Consumable": {
+            "quantity": 1,
+            "description": "",
+            "template": {}
+        },
+
+        "Weapon": {
+            "description": "",
+            "usage_phrases": [
+                "$CHARACTER_NAME:title swings $POSSESSIVE_PRONOUN:lower $WEAPON_NAME:lower at $TARGET_NAME:title."
+            ],
+            "two_handed": false,
+            "damage_dice": "1d6",
+            "damage_stat": "strength",
+            "attack_stat": "dexterity",
+            "range": "Melee"
+        },
+
+        "Miscellaneous": {
+            "description": ""
         }
     }
 }

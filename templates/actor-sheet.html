@@ -82,14 +82,16 @@
 
         {{!-- Items and Abilities Tab --}}
         <div class="tab" data-group="primary" data-tab="items_tab">
+            <div class="inventory">
             {{#each actor.items as |item id|}}
-                <div class="inventory-item" data-item-id="{{item._id}}">
+                <div class="item" data-item-id="{{item._id}}">
                     <label>{{item.name}}</label>
                     <button class="use">Use</button>
                     <button class="edit">Edit</button>
                     <button class="delete">Delete</button>
                 </div>
             {{/each}}
+            </div>
             <button class="new-item">New Item / Ability</button>
         </div>
 
@@ -157,7 +159,7 @@
             </div>
             <div class="possessive-pronoun-field">
                 <label>Possessive Pronoun (e.g. his, her, their)</label>
-                <input type="text" name="data.posessive_pronoun" value="{{data.possessive_pronoun}}"/>
+                <input type="text" name="data.possessive_pronoun" value="{{data.possessive_pronoun}}"/>
             </div>
         </div>
 

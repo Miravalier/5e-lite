@@ -200,7 +200,7 @@ export function preChatMessage(chatLog, message, chatData)
         }
         else
         {
-            return `:${m}:`;
+            return `&lt;unrecognized emoji: ${m}&gt;`;
         }
     });
 

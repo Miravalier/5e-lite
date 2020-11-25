@@ -1,6 +1,7 @@
 # IDE
 .idea/
 .vs/
+*.swp
 
 # Node Modules
 node_modules/
