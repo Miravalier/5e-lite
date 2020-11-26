@@ -164,6 +164,20 @@ export class WeaponSheet extends DndItemSheet {
 
         // Everything below here is only needed if the sheet is editable
         if (!this.options.editable) return;
+
+        html.find(".phrases .add-button").click(async ev => {
+            ev.preventDefault();
+            this.storeValue("data.usage_phrases.$id");
+            await this._onSubmit(ev);
+        });
+
+        html.find(".phrases .delete-button").click(async ev => {
+            ev.preventDefault();
+            const row = ev.target.closest(".row");
+            this.deleteValue("data.usage_phrases", row.dataset.key);
+            row.parentElement.removeChild(row);
+            await this._onSubmit(ev);
+        });
     }
 }
 

@@ -66,11 +66,11 @@
             "usage_phrases": {
                 "example": "$CHARACTER_NAME:title swings $POSSESSIVE_PRONOUN:lower $WEAPON_NAME:lower at $TARGET_NAME:title."
             },
-            "two_handed": false,
+            "hands": "one-handed",
             "damage_dice": "1d6",
             "damage_stat": "strength",
             "attack_stat": "dexterity",
-            "range": "Melee"
+            "range": 0
         },
 
         "Miscellaneous": {

@@ -233,7 +233,8 @@ form.item-create div.row {
     flex: 0 0 100px;
 }
 
-.dnd .attribute input {
+.dnd .attribute input,
+.dnd .attribute select {
     flex: 1;
 }
 
@@ -282,5 +283,9 @@ form.item-create div.row {
 }
 
 .dnd .phrases .list .row input {
+    font-family: monospace;
+}
+
+.dnd .formula {
     font-family: monospace;
 }

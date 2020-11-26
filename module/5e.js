@@ -21,6 +21,12 @@ import {
     preChatMessage,
     ErrorMessage
 } from "./chat.js";
+import {
+    preCreateItem,
+    preCreateOwnedItem,
+    preCreateActor,
+    preCreateToken
+} from "./create-defaults.js";
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -67,6 +73,10 @@ Hooks.once("init", async function() {
 
 Hooks.once("ready", function() {
     Hooks.on("renderChatMessage", (app, html, data) => onCreateChatMessage(html, data));
-    Hooks.on("chatMessage", (chatLog, message, chatData) => preChatMessage(chatLog, message, chatData));
+    Hooks.on("chatMessage", preChatMessage);
+    Hooks.on("preCreateItem", preCreateItem);
+    Hooks.on("preCreateOwnedItem", preCreateOwnedItem);
+    Hooks.on("preCreateActor", preCreateActor);
+    Hooks.on("preCreateToken", preCreateToken);
     Messages.prototype.export = onChatExport;
 });
