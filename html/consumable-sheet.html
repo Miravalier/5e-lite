@@ -2,7 +2,10 @@
     {{!-- Sheet Header --}}
     <header class="sheet-header">
         <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
-        <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" /></h1>
+        <div>
+            <label>{{item.type}}</label>
+            <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" /></h1>
+        </div>
     </header>
 
     {{!-- Sheet Tab Navigation --}}
@@ -19,9 +22,11 @@
         </div>
 
         <div class="tab" data-group="primary" data-tab="attributes_tab">
-            <div class="attribute">
-                <label>Quantity</label>
-                <input type="number" name="data.quantity" value="{{data.quantity}}" />
+            <div class="attribute-group">
+                <div class="attribute">
+                    <label>Quantity</label>
+                    <input type="number" name="data.quantity" value="{{data.quantity}}" />
+                </div>
             </div>
             <div class="template">
                 <header class="header">

@@ -3,21 +3,16 @@
     <header class="sheet-header">
         <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100" />
         <div>
-            {{#if isNPC}}
-            <label>NPC</label>
-            {{/if}}
-            {{#if isCharacter}}
-            <label>Player</label>
-            {{/if}}
+            <label>{{actor.type}}</label>
             <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name" /></h1>
         </div>
     </header>
 
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
+        <a class="item" data-tab="identity_tab">Identity</a>
         <a class="item" data-tab="stats_tab">Stats</a>
         <a class="item" data-tab="items_tab">Items and Abilities</a>
-        <a class="item" data-tab="background_tab">Background</a>
     </nav>
 
     {{!-- Sheet Body --}}
@@ -25,7 +20,8 @@
 
         {{!-- Stats Tab --}}
         <div class="tab" data-group="primary" data-tab="stats_tab">
-            <div class="ability-scores">
+            <div class="attribute-group box scores">
+                <span>Ability Scores</span>
                 <div class="attribute">
                     <label>Strength</label>
                     <input type="number" name="data.strength" value="{{data.strength}}"/>
@@ -52,28 +48,29 @@
                 </div>
             </div>
 
-            <div class="misc-stats">
-                <div class="stat">
+            <div class="attribute-group box combat">
+                <span>Combat Stats</span>
+                <div class="attribute">
                     <label>Armor Class</label>
                     <input type="number" name="data.ac" value="{{data.ac}}"/>
                 </div>
-                <div class="stat">
+                <div class="attribute">
                     <label>Initiative</label>
                     <input type="number" name="data.initiative" value="{{data.initiative}}"/>
                 </div>
-                <div class="stat">
+                <div class="attribute">
                     <label>Speed</label>
                     <input type="number" name="data.speed" value="{{data.speed}}"/>
                 </div>
             </div>
 
-            <div class="vitals">
-                <label>HP</label>
-                <div class="stat">
+            <div class="attribute-group box vitals">
+                <span>HP</span>
+                <div class="attribute">
                     <label>Current</label>
                     <input type="number" name="data.hp" value="{{data.hp}}"/>
                 </div>
-                <div class="stat">
+                <div class="attribute">
                     <label>Max</label>
                     <input type="number" name="data.max_hp" value="{{data.max_hp}}"/>
                 </div>
@@ -85,6 +82,7 @@
             <div class="inventory">
             {{#each actor.items as |item id|}}
                 <div class="item" data-item-id="{{item._id}}">
+                    <img src="{{item.img}}" class="item-icon"></img>
                     <label>{{item.name}}</label>
                     <button class="use">Use</button>
                     <button class="edit">Edit</button>
@@ -96,9 +94,9 @@
         </div>
 
         {{!-- Background Tab --}}
-        <div class="tab" data-group="primary" data-tab="background_tab">
+        <div class="tab" data-group="primary" data-tab="identity_tab">
             {{#if isCharacter}}
-            <div class="race-field">
+            <div class="background-field">
                 <label>Race</label>
                 <select name="data.race">
                     {{#select data.race}}
@@ -123,9 +121,9 @@
                     <option value="Warforged">Warforged</option>
                     {{/select}}
                 </select>
-                <input type="text" class="race-info" disabled></label>
+                <span class="race-info"> </label>
             </div>
-            <div class="class-field">
+            <div class="background-field">
                 <label>Class</label>
                 <select name="data.class">
                     {{#select data.class}}
@@ -144,20 +142,20 @@
                     <option value="Wizard">Wizard</option>
                     {{/select}}
                 </select>
-                <input type="text" class="class-info" disabled></label>
+                <span class="class-info"> </label>
             </div>
             {{/if}}
             {{#if isNPC}}
-            <div class="race-field">
+            <div class="background-field">
                 <label>Race</label>
                 <input type="text" name="data.race" value="{{data.race}}"/>
             </div>
             {{/if}}
-            <div class="subjective-pronoun-field">
+            <div class="pronoun-field">
                 <label>Subjective Pronoun (e.g. he, she, they)</label>
                 <input type="text" name="data.subjective_pronoun" value="{{data.subjective_pronoun}}"/>
             </div>
-            <div class="possessive-pronoun-field">
+            <div class="pronoun-field">
                 <label>Possessive Pronoun (e.g. his, her, their)</label>
                 <input type="text" name="data.possessive_pronoun" value="{{data.possessive_pronoun}}"/>
             </div>

@@ -10,7 +10,8 @@ export class DndCharacterSheet extends ActorSheet {
       template: "systems/5e-lite/html/actor-sheet.html",
       width: 600,
       height: 600,
-      tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "stats_tab"}],
+      tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "identity_tab"}],
+      dragDrop: [{dragSelector: ".inventory .item"}]
     });
   }
 
@@ -36,7 +37,7 @@ export class DndCharacterSheet extends ActorSheet {
     html.find('.inventory .item .use').click(ev => {
         const node = $(ev.currentTarget).parents(".item");
         const item = this.actor.getOwnedItem(node.data("itemId"));
-        console.log(item);
+        item.use();
     });
 
     html.find('.inventory .item .edit').click(ev => {
@@ -103,6 +104,7 @@ export class DndNpcSheet extends DndCharacterSheet {
       width: 600,
       height: 600,
       tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "stats_tab"}],
+      dragDrop: [{dragSelector: ".inventory .item"}]
     });
   }
 

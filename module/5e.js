@@ -28,6 +28,7 @@ import {
     preCreateToken
 } from "./create-defaults.js";
 
+
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
 /* -------------------------------------------- */
@@ -44,6 +45,9 @@ Hooks.once("init", async function() {
     };
 
     game.dnd = {
+        ActorMacro,
+        OwnedItemMacro,
+        ItemMacro,
         emoji: {
         }
     };
@@ -78,5 +82,74 @@ Hooks.once("ready", function() {
     Hooks.on("preCreateOwnedItem", preCreateOwnedItem);
     Hooks.on("preCreateActor", preCreateActor);
     Hooks.on("preCreateToken", preCreateToken);
+    Hooks.on("hotbarDrop", createMacro);
     Messages.prototype.export = onChatExport;
 });
+
+// Macros
+async function createMacro(bar, data, slot) {
+    let command = "";
+    let source = null;
+    if (data.type === "Item")
+    {
+        if (data.actorId) {
+            command = `game.dnd.OwnedItemMacro("${data.actorId}", "${data.data._id}");`;
+            source = game.actors.get(data.actorId).getOwnedItem(data.data._id);
+        }
+        else {
+            command = `game.dnd.ItemMacro("${data.id}");`;
+            source = game.items.get(data.id);
+        }
+    }
+    else if (data.type === "Actor")
+    {
+        command = `game.dnd.ActorMacro("${data.id}");`;
+        source = game.actors.get(data.id);
+    }
+    else
+    {
+        throw "Invalid macro drop source.";
+    }
+
+    let macro = game.macros.entities.find(m => (m.data.command === command));
+    if (!macro) {
+        macro = await Macro.create({
+            name: source.name,
+            type: "script",
+            img: source.img,
+            command: command
+        });
+    }
+
+    game.user.assignHotbarMacro(macro, slot);
+}
+
+function ActorMacro(actor_id)
+{
+    try {
+        game.actors.get(actor_id).sheet.render(true);
+    }
+    catch {
+        console.error("The actor this macro references no longer exists.");
+    }
+}
+
+function ItemMacro(item_id)
+{
+    try {
+        game.items.get(item_id).use()
+    }
+    catch {
+        console.error("The item this macro references no longer exists.");
+    }
+}
+
+function OwnedItemMacro(actor_id, item_id)
+{
+    try {
+        game.actors.get(actor_id).getOwnedItem(item_id).use();
+    }
+    catch {
+        console.error("Either the actor or item this macro references no longer exist.");
+    }
+}

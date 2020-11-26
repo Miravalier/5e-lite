@@ -222,20 +222,56 @@ form.item-create div.row {
     display: none;
 }
 
+.dnd .attribute-group {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    margin: 12px 4px;
+}
+
+.dnd .attribute-group.box {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+
+.dnd .attribute-group.box span {
+    flex: 0 0 100%;
+    text-align: center;
+    margin: 4px;
+    font-weight: bold;
+}
+
+.dnd .scores span {
+    background: rgba(0, 128, 255, 0.05);
+}
+
+.dnd .combat span {
+    background: rgba(64, 0, 200, 0.05);
+}
+
+.dnd .vitals span {
+    background: rgba(128, 255, 0, 0.1);
+}
+
 .dnd .attribute {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    padding: 2px;
+    justify-content: center;
+    margin: 2px 10px;
+    width: 220px;
 }
 
 .dnd .attribute label {
-    flex: 0 0 100px;
+    margin: 4px 10px;
 }
 
 .dnd .attribute input,
 .dnd .attribute select {
-    flex: 1;
+    flex: 0 0 50px;
+    text-align: center;
+    margin: 2px;
 }
 
 .dnd .header {
@@ -288,4 +324,35 @@ form.item-create div.row {
 
 .dnd input.formula {
     font-family: monospace;
+    flex: 0 0 140px;
+}
+
+.dnd .background-field {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 4px 4px 16px 4px;
+}
+
+.dnd .background-field span {
+    flex: 0 0 100%;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.dnd .background-field > * {
+    margin: 6px;
+}
+
+.dnd .pronoun-field {
+    margin: 6px;
+}
+
+.dnd .item-icon {
+    border: none;
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
 }
