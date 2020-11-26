@@ -41,7 +41,7 @@ export class ActiveAbilitySheet extends DndItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["dnd", "sheet", "item"],
-            template: "systems/5e-lite/templates/active-ability-sheet.html",
+            template: "systems/5e-lite/html/active-ability-sheet.html",
             width: 520,
             height: 480,
             tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description_tab"}],
@@ -91,7 +91,7 @@ export class PassiveAbilitySheet extends DndItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["dnd", "sheet", "item"],
-            template: "systems/5e-lite/templates/passive-ability-sheet.html",
+            template: "systems/5e-lite/html/passive-ability-sheet.html",
             width: 520,
             height: 480,
             tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description_tab"}],
@@ -114,7 +114,7 @@ export class ConsumableSheet extends DndItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["dnd", "sheet", "item"],
-            template: "systems/5e-lite/templates/consumable-sheet.html",
+            template: "systems/5e-lite/html/consumable-sheet.html",
             width: 520,
             height: 480,
             tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description_tab"}],
@@ -151,7 +151,7 @@ export class WeaponSheet extends DndItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["dnd", "sheet", "item"],
-            template: "systems/5e-lite/templates/weapon-sheet.html",
+            template: "systems/5e-lite/html/weapon-sheet.html",
             width: 520,
             height: 480,
             tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description_tab"}],
@@ -188,7 +188,7 @@ export class MiscSheet extends DndItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["dnd", "sheet", "item"],
-            template: "systems/5e-lite/templates/misc-sheet.html",
+            template: "systems/5e-lite/html/misc-sheet.html",
             width: 520,
             height: 480,
             tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description_tab"}],

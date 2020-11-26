@@ -7,7 +7,7 @@ export class DndCharacterSheet extends ActorSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["dnd", "sheet", "actor"],
-      template: "systems/5e-lite/templates/actor-sheet.html",
+      template: "systems/5e-lite/html/actor-sheet.html",
       width: 600,
       height: 600,
       tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "stats_tab"}],
@@ -61,7 +61,7 @@ export class DndCharacterSheet extends ActorSheet {
 
     html.find('.new-item').click(async ev => {
         const node = $(ev.currentTarget);
-        const content = await renderTemplate("systems/5e-lite/templates/item-create.html");
+        const content = await renderTemplate("systems/5e-lite/html/item-create.html");
         Dialog.confirm({
             title: "Create Item / Ability",
             content: content,
@@ -99,7 +99,7 @@ export class DndNpcSheet extends DndCharacterSheet {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["dnd", "sheet", "actor"],
-      template: "systems/5e-lite/templates/actor-sheet.html",
+      template: "systems/5e-lite/html/actor-sheet.html",
       width: 600,
       height: 600,
       tabs: [{navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "stats_tab"}],
