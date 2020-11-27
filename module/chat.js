@@ -1,3 +1,5 @@
+import { selectToken, selectTokens } from "./ui.js"
+
 function spongebobCase(s)
 {
     let capital = true;
@@ -361,22 +363,13 @@ async function onChatTemplateCaptionClicked(event)
 
     // Render source sheet
     const source = JSON.parse(atob(button.dataset.source));
-    if (source.type === "Actor")
-    {
-        game.actors.get(source.actorId).sheet.render(true);
-    }
-    else if (source.type === "Item")
-    {
-        game.items.get(source.itemId).sheet.render(true);
-    }
-    else if (source.type === "OwnedItem")
-    {
-        const actor = game.actors.get(source.actorId);
-        actor.getOwnedItem(source.itemId).sheet.render(true);
-    }
-    else
-    {
-        throw ("Unrecognized chat template source " + source.type);
+    const actor = game.actors.get(source.actorId);
+    if (actor != null) {
+        const item = actor.getOwnedItem(source.itemId);
+        if (item != null)
+        {
+            item.sheet.render(true);
+        }
     }
 
     // Re-enable button
@@ -384,133 +377,210 @@ async function onChatTemplateCaptionClicked(event)
 }
 
 
-// ChatTemplate class, created with a source of any actor,
-// item, or ability.
-export class ChatTemplate {
-    constructor(source, template) {
-        this.source = source;
-        if (source.entity === "Actor")
+function dedent(str) {
+	str = str.replace(/^\n/, "");
+	let match = str.match(/^\s+/);
+	return match ? str.replace(new RegExp("^"+match[0], "gm"), "") : str;
+}
+
+
+function indent(str, count)
+{
+    if (!count) count = 1;
+    return str.replace(/^/gm, "    ".repeat(count));
+}
+
+
+function oxfordList(array) {
+    if (array.length == 0) return "no one";
+    else if (array.length == 1) return array[0];
+    else if (array.length == 2) return array.join(" and ");
+    array = array.slice();
+    array[array.length-1] = `and ${array[array.length-1]}`;
+    return array.join(", ");
+}
+
+
+export function chatTemplateDescription(source)
+{
+    let description = source.data.data.description;
+    return (`<div class="chat-template description">${description}</div>`);
+}
+
+
+export function chatTemplateUsage(source, targetNames)
+{
+    const targetString = oxfordList(Array.from(targetNames));
+    const templates = Object.values(source.data.data.usage_phrases);
+    const template = templates[Math.floor(Math.random() * templates.length)];
+    const variables = {
+        ITEM: source.name,
+        ITEM_NAME: source.name,
+        CHARACTER: source.actor.name,
+        CHARACTER_NAME: source.actor.name,
+        CHARACTER_POSSESSIVE_PRONOUN: source.actor.data.data.possessive_pronoun,
+        CHARACTER_SUBJECTIVE_PRONOUN: source.actor.data.data.subjective_pronoun,
+        POSSESSIVE_PRONOUN: source.actor.data.data.possessive_pronoun,
+        SUBJECTIVE_PRONOUN: source.actor.data.data.subjective_pronoun,
+        POSSESSIVE: source.actor.data.data.possessive_pronoun,
+        SUBJECTIVE: source.actor.data.data.subjective_pronoun,
+        TARGET: targetString,
+        TARGETS: targetString,
+        TARGET_NAME: targetString,
+        TARGET_NAMES: targetString
+    };
+
+    const usage_phrase = template.replace(/\$\{([a-z0-9_-]+)\}/ig, (match, variable) => {
+        return variables[variable];
+    });
+
+    return (`<div class="chat-template description"><p>${usage_phrase}</p></div>`);
+}
+
+
+export async function chatTemplateRolls(source, targetNames)
+{
+    const rows = [];
+    let target = null;
+    let targets = null;
+    let fields = null;
+    const rollData = source.actor.getRollData();
+    const template = source.data.data.template;
+
+    // Roll each untargeted row
+    fields = Object.values(template).filter(row => row.target_type === "None");
+    for (const row of fields)
+    {
+        let result = "";
+        if (row.formula)
         {
-            this.title = "";
-            this.origin = source.name;
-            this.description = "";
-            this.template = {};
-            this.ids = btoa(JSON.stringify({
-                "type": "Actor",
-                "actorId": source._id
-            }));
-            this.roll_data = source.getRollData();
+            const roll = new Roll(row.formula, rollData);
+            roll.roll();
+            result = dedent(`
+                <div class="chat-template roll">
+                    <div class="chat-template total">${Math.round(roll.total)}</div>
+                    <div class="chat-template formula">${row.formula}</div>
+                </div>
+            `);
         }
-        else if (source.entity === "Item")
+        rows.push(dedent(`
+            <div class="chat-template item">
+                <div class="chat-template label">${row.label}</div>
+                ${indent(result)}
+            </div>
+        `));
+    }
+
+    // Roll each Individual Target row
+    for (let i=1; i <= 3; i++)
+    {
+        target = null;
+        fields = Object.values(template).filter(row => row.target_type === `Target ${i}`);
+        for (const row of fields)
         {
-            if (source.actor) {
-                this.title = source.name;
-                this.origin = source.actor.name;
-                this.ids = btoa(JSON.stringify({
-                    "type": "OwnedItem",
-                    "actorId": source.actor._id,
-                    "itemId": source._id
-                }));
-                this.roll_data = source.actor.getRollData();
+            // Select a target the first time through
+            if (!target) {
+                target = await selectToken(`${source.name} Target ${i}`);
+                if (!target) throw "No token selected.";
+                if (!target.actor) throw "Token does not have an actor.";
+                targetNames.add(target.name);
+                rows.push(dedent(`
+                    <div class="chat-template item">
+                        <div class="chat-template label">${target.name}</div>
+                    </div>
+                `));
             }
-            else
+            let result = "";
+            if (row.formula)
             {
-                this.title = "";
-                this.origin = source.name;
-                this.ids = btoa(JSON.stringify({
-                    "type": "Item",
-                    "itemId": source._id
-                }));
-                this.roll_data = {};
-            }
-            this.description = source.data.data.description;
-            this.template = source.data.data.template;
-        }
-        else
-        {
-            throw "Invalid ChatTemplate source type.";
-        }
-        this.icon = source.img;
-        if (typeof template !== 'undefined' && template !== null)
-        {
-            Object.assign(this.template, template);
-        }
-    }
-
-    send(speaker) {
-        if (typeof speaker === 'undefined' || speaker === null) {
-            speaker = ChatMessage.getSpeaker();
-        }
-        ChatMessage.create({
-            user: game.user._id,
-            speaker: speaker,
-            content: this.toString()
-        });
-    }
-
-    toString() {
-        let output = "";
-
-        // Build Header
-        output += `<div class="chat-template caption" data-source="${this.ids}">`;
-        output += `<img src="${this.icon}" title="Roll Icon" width="36" height="36" />`;
-        output += `<span>${this.title}</span>`;
-        output += `<span>${this.origin}</span>`;
-        output += '</div>';
-
-        // Build Body
-        if (this.description)
-        {
-            output += '<div class="chat-template description">';
-            output += this.description;
-            output += '</div>';
-        }
-        if (this.template)
-        {
-            output += '<div class="chat-template list">';
-            // Roll all of the always values once
-            Object.values(this.template).filter(r => r.target_type === "Always").forEach(row => {
-                const roll = new Roll(row.formula, this.roll_data);
+                // Update roll data with the target's values
+                const targetRollData = target.actor.getRollData();
+                Object.keys(targetRollData).forEach(key => {
+                    rollData["target_" + key] = targetRollData[key];
+                });
+                // Make the roll
+                const roll = new Roll(row.formula, rollData);
                 roll.roll();
-                output += '<div class="chat-template item">';
-                    output += `<div class="chat-template label">${row.label}</div>`;
-                    output += `<div class="chat-template roll">`;
-                        output += `<div class="chat-template total">${Math.round(roll.total)}</div>`;
-                        output += `<div class="chat-template formula">${row.formula}</div>`;
-                    output += '</div>';
-                output += '</div>';
-            });
-
-            // Roll each of the per target values for each target
-            game.user.targets.forEach(token => {
-                // Update roll data with each target's info
-                const target_data = token.actor.getRollData();
-                Object.keys(target_data).forEach(key => {
-                    this.roll_data["target_" + key] = target_data[key];
-                });
-                output += `<div class="chat-template item">`;
-                    output += `<div class="chat-template target">`;
-                        output += token.name;
-                    output += `</div>`;
-                output += `</div>`;
-                // Roll each Per Target value
-                Object.values(this.template).filter(
-                    r => r.target_type === "Per Target"
-                ).forEach(row => {
-                    const roll = new Roll(row.formula, this.roll_data);
-                    roll.roll();
-                    output += '<div class="chat-template item">';
-                        output += `<div class="chat-template label">${row.label}</div>`;
-                        output += `<div class="chat-template roll">`;
-                            output += `<div class="chat-template total">${Math.round(roll.total)}</div>`;
-                            output += `<div class="chat-template formula">${row.formula}</div>`;
-                        output += '</div>';
-                    output += '</div>';
-                });
-            });
-            output += '</div>';
+                result = dedent(`
+                    <div class="chat-template roll">
+                        <div class="chat-template total">${Math.round(roll.total)}</div>
+                        <div class="chat-template formula">${row.formula}</div>
+                    </div>
+                `);
+            }
+            rows.push(dedent(`
+                <div class="chat-template item">
+                    <div class="chat-template label">${row.label}</div>
+                    ${indent(result)}
+                </div>
+            `));
         }
-
-        return output;
     }
+
+    // Roll each Group Target row
+    for (let i=1; i <= 3; i++)
+    {
+        targets = null;
+        fields = Object.values(template).filter(row => row.target_type === `Group ${i}`);
+        for (let row of fields)
+        {
+            // Select targets the first time through
+            if (targets === null) {
+                targets = await selectTokens(`${source.name} Group ${i} Targets`);
+                rollData["group_size"] = targets.size;
+            }
+            // Go through each target rolling this row
+            for (let target of targets)
+            {
+                if (!target.actor) throw "Token does not have an actor.";
+                targetNames.add(target.name);
+                let result = "";
+                if (row.formula)
+                {
+                    // Update roll data with the target's values
+                    const targetRollData = target.actor.getRollData();
+                    Object.keys(targetRollData).forEach(key => {
+                        rollData["target_" + key] = targetRollData[key];
+                    });
+                    // Make the roll
+                    const roll = new Roll(row.formula, rollData);
+                    roll.roll();
+                    result = dedent(`
+                        <div class="chat-template roll">
+                            <div class="chat-template total">${Math.round(roll.total)}</div>
+                            <div class="chat-template formula">${row.formula}</div>
+                        </div>
+                    `);
+                }
+                rows.push(dedent(`
+                    <div class="chat-template item">
+                        <div class="chat-template label">${target.name} ${row.label}</div>
+                        ${indent(result)}
+                    </div>
+                `));
+            }
+        }
+    }
+
+    return dedent(`
+        <div class="chat-template list">
+            ${indent(rows.join('\n'))}
+        </div>
+    `);
+}
+
+
+export function chatTemplateHeader(source)
+{
+    const sourceData = btoa(JSON.stringify({
+        "actorId": source.actor._id,
+        "itemId": source._id
+    }));
+
+    return dedent(`
+        <div class="chat-template caption" data-source="${sourceData}">
+            <img src="${source.img}" title="Roll Icon" width="36" height="36" />
+            <span>${source.name}</span>
+        </div>
+    `);
 }

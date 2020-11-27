@@ -250,8 +250,12 @@ form.item-create div.row {
     background: rgba(64, 0, 200, 0.05);
 }
 
-.dnd .vitals span {
+.dnd .hp span {
     background: rgba(128, 255, 0, 0.1);
+}
+
+.dnd .mana span {
+    background: rgba(0, 255, 255, 0.05);
 }
 
 .dnd .attribute {
@@ -374,22 +378,26 @@ form.item-create div.row {
 }
 
 .journal-sheet a.entity-link,
-.actor.sheet a.entity-link {
+.actor.sheet a.entity-link,
+.item.sheet a.entity-link {
     line-height: 24px;
 }
 
 .journal-sheet a.entity-link i,
-.actor.sheet a.entity-link i {
+.actor.sheet a.entity-link i,
+.item.sheet a.entity-link i {
     display: none;
 }
 
 .journal-sheet li,
-.actor.sheet li {
+.actor.sheet li,
+.item.sheet li {
     margin: 8px 0px;
 }
 
 .journal-sheet a.item-link,
-.actor.sheet a.item-link {
+.actor.sheet a.item-link,
+.item.sheet a.item-link {
     background: #DDD;
     padding: 1px 4px;
     border: 1px solid #4b4a44;

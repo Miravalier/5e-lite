@@ -12,13 +12,22 @@
             "ac": 10,
             "initiative": 0,
             "speed": 30,
-            "mana": 0,
-            "hp": 25,
-            "max_hp": 25,
+            "mana": {
+                "value": 0,
+                "min": 0,
+                "max": 0
+            },
+            "hp": {
+                "value": 0,
+                "min": 0,
+                "max": 0
+            },
             "race": "Human",
             "class": "Fighter",
             "subjective_pronoun": "they",
-            "possessive_pronoun": "their"
+            "possessive_pronoun": "their",
+            "death_saves_failed": 0,
+            "death_saves_succeeded": 0
         },
 
         "NPC": {
@@ -31,9 +40,16 @@
             "ac": 10,
             "initiative": 0,
             "speed": 30,
-            "mana": 0,
-            "hp": 10,
-            "max_hp": 10,
+            "mana": {
+                "value": 0,
+                "min": 0,
+                "max": 0
+            },
+            "hp": {
+                "value": 0,
+                "min": 0,
+                "max": 0
+            },
             "race": "Human",
             "subjective_pronoun": "they",
             "possessive_pronoun": "their"
@@ -49,7 +65,7 @@
             "template": {},
             "action_type": "Standard",
             "usage_phrases": {
-                "example": "${CHARACTER_NAME} uses ${ITEM_NAME}."
+                "example": "${CHARACTER} uses ${ITEM}."
             }
         },
 

@@ -1,5 +1,10 @@
 import { selectToken, selectTokens } from "./ui.js";
-import { ChatTemplate } from "./chat.js";
+import {
+    chatTemplateHeader,
+    chatTemplateDescription,
+    chatTemplateUsage,
+    chatTemplateRolls
+} from "./chat.js";
 
 /**
  * @extends {Item}
@@ -79,17 +84,28 @@ export class DndItem extends Item {
     }
 
     async ownedActiveAbilityShow() {
-        let template = new ChatTemplate(this);
-        template.template = {};
-        template.send();
+        ChatMessage.create({
+            user: game.user._id,
+            speaker: ChatMessage.getSpeaker(),
+            content: `
+                ${chatTemplateHeader(this)}
+                ${chatTemplateDescription(this)}
+            `
+        });
     }
 
     async ownedActiveAbilityUse() {
-        const token = await selectToken(`${this.name} Target`);
-        const tokens = await selectTokens(`${this.name} Targets`);
-        let template = new ChatTemplate(this);
-        template.description = "";
-        template.send();
+        const targetNames = new Set();
+        const rolls = await chatTemplateRolls(this, targetNames);
+        ChatMessage.create({
+            user: game.user._id,
+            speaker: ChatMessage.getSpeaker(),
+            content: `
+                ${chatTemplateHeader(this)}
+                ${chatTemplateUsage(this, targetNames)}
+                ${rolls}
+            `
+        });
     }
 
     miscUse() {

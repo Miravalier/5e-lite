@@ -62,21 +62,39 @@
                     <label>Speed</label>
                     <input type="number" name="data.speed" value="{{data.speed}}"/>
                 </div>
+                {{#if isCharacter}}
                 <div class="attribute">
-                    <label>Mana</label>
-                    <input type="number" name="data.mana" value="{{data.mana}}"/>
+                    <label>Death Saves Failed</label>
+                    <input type="number" name="data.death_saves_failed" value="{{data.death_saves_failed}}"/>
                 </div>
+                <div class="attribute">
+                    <label>Death Saves Succeeded</label>
+                    <input type="number" name="data.death_saves_succeeded" value="{{data.death_saves_succeeded}}"/>
+                </div>
+                {{/if}}
             </div>
 
-            <div class="attribute-group box vitals">
+            <div class="attribute-group box hp">
                 <span>HP</span>
                 <div class="attribute">
                     <label>Current</label>
-                    <input type="number" name="data.hp" value="{{data.hp}}"/>
+                    <input type="number" name="data.hp.value" value="{{data.hp.value}}"/>
                 </div>
                 <div class="attribute">
                     <label>Max</label>
-                    <input type="number" name="data.max_hp" value="{{data.max_hp}}"/>
+                    <input type="number" name="data.hp.max" value="{{data.hp.max}}"/>
+                </div>
+            </div>
+
+            <div class="attribute-group box mana">
+                <span>Mana</span>
+                <div class="attribute">
+                    <label>Current</label>
+                    <input type="number" name="data.mana.value" value="{{data.mana.value}}"/>
+                </div>
+                <div class="attribute">
+                    <label>Max</label>
+                    <input type="number" name="data.mana.max" value="{{data.mana.max}}"/>
                 </div>
             </div>
         </div>

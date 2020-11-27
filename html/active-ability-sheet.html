@@ -42,7 +42,7 @@
             </div>
             <div class="template">
                 <header class="header">
-                    <span class="select">Type</span>
+                    <span class="select">Target</span>
                     <span class="text">Label</span>
                     <span class="text">Formula</span>
                     <a class="add-button" data-action="create"><i class="fas fa-plus"></i></a>
@@ -52,8 +52,13 @@
                     <div class="row" data-key="{{key}}">
                         <select name="data.template.{{key}}.target_type">
                             {{#select item.target_type}}
-                            <option value="Always">Always</option>
-                            <option value="Per Target">Per Target</option>
+                            <option value="None">None</option>
+                            <option value="Target 1">Target 1</option>
+                            <option value="Target 2">Target 2</option>
+                            <option value="Target 3">Target 3</option>
+                            <option value="Group 1">Group 1</option>
+                            <option value="Group 2">Group 2</option>
+                            <option value="Group 3">Group 3</option>
                             {{/select}}
                         </select>
                         <input class="label" type="text" name="data.template.{{key}}.label"
