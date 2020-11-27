@@ -1,3 +1,13 @@
+/* @Item[rVHTJNj69junL7fL]{Infusion: Resistant Armor} */
+const itemLinkRegex = /@Item\[([a-z0-9_-]+)\]\{([^}]+)\}/gi
+function convertItemLinks(content)
+{
+    return content.replace(
+        itemLinkRegex,
+        `<a class="item-link" role="button" data-item-id="$1">$2</a>`
+    );
+}
+
 /**
  * @extends {ActorSheet}
  */
@@ -22,6 +32,18 @@ export class DndCharacterSheet extends ActorSheet {
     const data = super.getData();
     data.isCharacter = true;
     data.isNPC = false;
+
+    if (this.actor.data.data["class"])
+    {
+        const race = this.actor.data.data.race;
+        const raceJournal = game.journal.find(entry => entry.name == race);
+        data.raceInfo = convertItemLinks(raceJournal.data.content);
+
+        const _class = this.actor.data.data["class"];
+        const _classJournal = game.journal.find(entry => entry.name == _class);
+        data.classInfo = convertItemLinks(_classJournal.data.content);
+    }
+
     return data;
   }
 
@@ -31,8 +53,20 @@ export class DndCharacterSheet extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
+    html.find('.item-link').click(ev => {
+        const node = $(ev.currentTarget);
+        const item = game.items.get(node.data("itemId"));
+        item.sheet.render(true);
+    });
+
     // Everything below here is only needed if the sheet is editable
     if ( !this.options.editable ) return;
+
+    html.find('.inventory .item .show').click(ev => {
+        const node = $(ev.currentTarget).parents(".item");
+        const item = this.actor.getOwnedItem(node.data("itemId"));
+        item.show();
+    });
 
     html.find('.inventory .item .use').click(ev => {
         const node = $(ev.currentTarget).parents(".item");

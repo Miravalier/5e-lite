@@ -387,7 +387,7 @@ async function onChatTemplateCaptionClicked(event)
 // ChatTemplate class, created with a source of any actor,
 // item, or ability.
 export class ChatTemplate {
-    constructor(source, template, buttons) {
+    constructor(source, template) {
         this.source = source;
         if (source.entity === "Actor")
         {
@@ -395,7 +395,6 @@ export class ChatTemplate {
             this.origin = source.name;
             this.description = "";
             this.template = {};
-            this.buttons = {};
             this.ids = btoa(JSON.stringify({
                 "type": "Actor",
                 "actorId": source._id
@@ -426,7 +425,6 @@ export class ChatTemplate {
             }
             this.description = source.data.data.description;
             this.template = source.data.data.template;
-            this.buttons = {};
         }
         else
         {
@@ -436,10 +434,6 @@ export class ChatTemplate {
         if (typeof template !== 'undefined' && template !== null)
         {
             Object.assign(this.template, template);
-        }
-        if (typeof buttons !== 'undefined' && buttons !== null)
-        {
-            Object.assign(this.buttons, buttons);
         }
     }
 
@@ -474,18 +468,46 @@ export class ChatTemplate {
         if (this.template)
         {
             output += '<div class="chat-template list">';
-            for (let value of Object.values(this.template))
-            {
-                const roll = new Roll(value.roll, this.roll_data);
+            // Roll all of the always values once
+            Object.values(this.template).filter(r => r.target_type === "Always").forEach(row => {
+                const roll = new Roll(row.formula, this.roll_data);
                 roll.roll();
                 output += '<div class="chat-template item">';
-                    output += `<div class="chat-template label">${value.label}</div>`;
+                    output += `<div class="chat-template label">${row.label}</div>`;
                     output += `<div class="chat-template roll">`;
                         output += `<div class="chat-template total">${Math.round(roll.total)}</div>`;
-                        output += `<div class="chat-template formula">${value.roll}</div>`;
+                        output += `<div class="chat-template formula">${row.formula}</div>`;
                     output += '</div>';
                 output += '</div>';
-            }
+            });
+
+            // Roll each of the per target values for each target
+            game.user.targets.forEach(token => {
+                // Update roll data with each target's info
+                const target_data = token.actor.getRollData();
+                Object.keys(target_data).forEach(key => {
+                    this.roll_data["target_" + key] = target_data[key];
+                });
+                output += `<div class="chat-template item">`;
+                    output += `<div class="chat-template target">`;
+                        output += token.name;
+                    output += `</div>`;
+                output += `</div>`;
+                // Roll each Per Target value
+                Object.values(this.template).filter(
+                    r => r.target_type === "Per Target"
+                ).forEach(row => {
+                    const roll = new Roll(row.formula, this.roll_data);
+                    roll.roll();
+                    output += '<div class="chat-template item">';
+                        output += `<div class="chat-template label">${row.label}</div>`;
+                        output += `<div class="chat-template roll">`;
+                            output += `<div class="chat-template total">${Math.round(roll.total)}</div>`;
+                            output += `<div class="chat-template formula">${row.formula}</div>`;
+                        output += '</div>';
+                    output += '</div>';
+                });
+            });
             output += '</div>';
         }
 

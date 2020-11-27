@@ -275,7 +275,7 @@ form.item-create div.row {
 }
 
 .dnd .header {
-    padding: 5px;
+    padding: 2px;
     margin: 5px 0;
     background: rgba(0, 0, 0, 0.05);
     border: 1px solid #AAA;
@@ -293,6 +293,10 @@ form.item-create div.row {
     flex: 1;
     margin: 0px 4px;
 }
+.dnd .header span.select {
+    flex: 0 0 100px;
+    margin: 0px 4px;
+}
 
 .dnd .header .add-button {
     margin: 0px 4px;
@@ -307,11 +311,17 @@ form.item-create div.row {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
+    padding: 2px
 }
 
 .dnd .list .row input {
     flex: 1;
     margin: 4px;
+}
+
+.dnd .list .row select {
+    flex: 0 0 100px;
+    margin: 0px 4px;
 }
 
 .dnd .list .row .delete-button {
@@ -355,4 +365,36 @@ form.item-create div.row {
     width: 36px;
     height: 36px;
     object-fit: contain;
+}
+
+.journal-sheet img,
+.actor.sheet img {
+    object-fit: contain;
+    border: none;
+}
+
+.journal-sheet a.entity-link,
+.actor.sheet a.entity-link {
+    line-height: 24px;
+}
+
+.journal-sheet a.entity-link i,
+.actor.sheet a.entity-link i {
+    display: none;
+}
+
+.journal-sheet li,
+.actor.sheet li {
+    margin: 8px 0px;
+}
+
+.journal-sheet a.item-link,
+.actor.sheet a.item-link {
+    background: #DDD;
+    padding: 1px 4px;
+    border: 1px solid #4b4a44;
+    border-radius: 2px;
+    white-space: nowrap;
+    word-break: break-all;
+    line-height: 24px;
 }

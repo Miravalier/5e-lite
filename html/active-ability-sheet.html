@@ -22,19 +22,40 @@
         </div>
 
         <div class="tab" data-group="primary" data-tab="attributes_tab">
-            <div class="attribute">
-                <label>Mana Cost</label>
-                <input type="number" name="data.cost" value="{{data.cost}}" />
+            <div class="attribute-group">
+                <div class="attribute">
+                    <label>Action</label>
+                    <select name="data.action_type">
+                        {{#select data.action_type}}
+                        <option value="Standard">Standard</option>
+                        <option value="Bonus">Bonus</option>
+                        <option value="Reaction">Reaction</option>
+                        <option value="Movement">Movement</option>
+                        <option value="Free">Free</option>
+                        {{/select}}
+                    </select>
+                </div>
+                <div class="attribute">
+                    <label>Mana Cost</label>
+                    <input type="number" name="data.cost" value="{{data.cost}}" />
+                </div>
             </div>
             <div class="template">
                 <header class="header">
-                    <span>Attribute</span>
-                    <span>Formula</span>
+                    <span class="select">Type</span>
+                    <span class="text">Label</span>
+                    <span class="text">Formula</span>
                     <a class="add-button" data-action="create"><i class="fas fa-plus"></i></a>
                 </header>
                 <div class="list">
                 {{#each data.template as |item key|}}
                     <div class="row" data-key="{{key}}">
+                        <select name="data.template.{{key}}.target_type">
+                            {{#select item.target_type}}
+                            <option value="Always">Always</option>
+                            <option value="Per Target">Per Target</option>
+                            {{/select}}
+                        </select>
                         <input class="label" type="text" name="data.template.{{key}}.label"
                             value="{{item.label}}"/>
                         <input class="formula" type="text" name="data.template.{{key}}.formula"

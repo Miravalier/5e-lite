@@ -12,6 +12,7 @@
             "ac": 10,
             "initiative": 0,
             "speed": 30,
+            "mana": 0,
             "hp": 25,
             "max_hp": 25,
             "race": "Human",
@@ -30,6 +31,7 @@
             "ac": 10,
             "initiative": 0,
             "speed": 30,
+            "mana": 0,
             "hp": 10,
             "max_hp": 10,
             "race": "Human",
@@ -39,14 +41,15 @@
     },
 
     "Item": {
-        "types": ["Active Ability", "Passive Ability", "Consumable", "Weapon", "Miscellaneous"],
+        "types": ["Active Ability", "Passive Ability", "Consumable", "Miscellaneous"],
 
         "Active Ability": {
             "description": "",
             "cost": 0,
             "template": {},
+            "action_type": "Standard",
             "usage_phrases": {
-                "example": "$CHARACTER_NAME:title casts $SPELL_NAME:title."
+                "example": "${CHARACTER_NAME} uses ${ITEM_NAME}."
             }
         },
 
@@ -59,18 +62,6 @@
             "description": "",
             "quantity": 1,
             "template": {}
-        },
-
-        "Weapon": {
-            "description": "",
-            "usage_phrases": {
-                "example": "$CHARACTER_NAME:title swings $POSSESSIVE_PRONOUN:lower $WEAPON_NAME:lower at $TARGET_NAME:title."
-            },
-            "hands": "one-handed",
-            "damage_dice": "1d6",
-            "damage_stat": "strength",
-            "attack_stat": "dexterity",
-            "range": 0
         },
 
         "Miscellaneous": {

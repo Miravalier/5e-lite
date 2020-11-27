@@ -1,3 +1,6 @@
+import { selectToken, selectTokens } from "./ui.js";
+import { ChatTemplate } from "./chat.js";
+
 /**
  * @extends {Item}
  */
@@ -27,17 +30,6 @@ export class DndItem extends Item {
                 this.activeAbilityUse();
             }
         }
-        else if (this.type == "Weapon")
-        {
-            if (this.actor)
-            {
-                this.ownedWeaponUse();
-            }
-            else
-            {
-                this.weaponUse();
-            }
-        }
         else if (this.type == "Passive Ability")
         {
             this.passiveUse();
@@ -52,26 +44,69 @@ export class DndItem extends Item {
         }
     }
 
+    show() {
+        if (this.type == "Active Ability")
+        {
+            if (this.actor)
+            {
+                this.ownedActiveAbilityShow();
+            }
+            else
+            {
+                this.activeAbilityShow();
+            }
+        }
+        else if (this.type == "Passive Ability")
+        {
+            this.passiveShow();
+        }
+        else if (this.type == "Miscellaneous")
+        {
+            this.miscShow();
+        }
+        else if (this.type == "Consumable")
+        {
+            this.consumableShow();
+        }
+    }
+
 
     // Specific use functions for each item type
     activeAbilityUse() {
     }
 
-    ownedActiveAbilityUse() {
+    activeAbilityShow() {
     }
 
-    weaponUse() {
+    async ownedActiveAbilityShow() {
+        let template = new ChatTemplate(this);
+        template.template = {};
+        template.send();
     }
 
-    ownedWeaponUse() {
+    async ownedActiveAbilityUse() {
+        const token = await selectToken(`${this.name} Target`);
+        const tokens = await selectTokens(`${this.name} Targets`);
+        let template = new ChatTemplate(this);
+        template.description = "";
+        template.send();
     }
 
     miscUse() {
     }
 
+    miscShow() {
+    }
+
     passiveUse() {
     }
 
+    passiveShow() {
+    }
+
     consumableUse() {
+    }
+
+    consumableShow() {
     }
 }
