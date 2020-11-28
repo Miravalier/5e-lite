@@ -6,6 +6,41 @@ import {
     chatTemplateRolls
 } from "./chat.js";
 
+
+function walkFolder(folder, array)
+{
+    if (!array) array = [];
+
+    folder.content.forEach(item => array.push(item));
+
+    folder.children.forEach(child => {
+        walkFolder(child, array);
+    });
+
+    return array;
+}
+
+
+export function raceItems(race)
+{
+    const racesFolder = game.folders.find(
+        f => f.name === "Races" && f.type === "Item" && f.depth === 1
+    );
+    const raceFolder = racesFolder.children.find(f => f.name === race);
+    return walkFolder(raceFolder);
+}
+
+
+export function classItems(cls)
+{
+    const classesFolder = game.folders.find(
+        f => f.name === "Classes" && f.type === "Item" && f.depth === 1
+    );
+    const classFolder = classesFolder.children.find(f => f.name === cls);
+    return walkFolder(classFolder);
+}
+
+
 /**
  * @extends {Item}
  */
@@ -28,20 +63,12 @@ export class DndItem extends Item {
         {
             if (this.actor)
             {
-                this.ownedActiveAbilityUse();
+                this.ownedActiveUse();
             }
             else
             {
-                this.activeAbilityUse();
+                this.activeUse();
             }
-        }
-        else if (this.type == "Passive Ability")
-        {
-            this.passiveUse();
-        }
-        else if (this.type == "Miscellaneous")
-        {
-            this.miscUse();
         }
         else if (this.type == "Consumable")
         {
@@ -50,40 +77,43 @@ export class DndItem extends Item {
     }
 
     show() {
-        if (this.type == "Active Ability")
-        {
-            if (this.actor)
-            {
-                this.ownedActiveAbilityShow();
+        if (this.actor) {
+            if (this.type === "Active Ability") {
+                this.ownedActiveShow();
             }
-            else
-            {
-                this.activeAbilityShow();
+            else if (this.type === "Passive Ability") {
+                this.ownedPassiveShow();
+            }
+            else if (this.type === "Miscellaneous") {
+                this.ownedMiscShow();
+            }
+            else if (this.type === "Consumable") {
+                this.ownedConsumableShow();
             }
         }
-        else if (this.type == "Passive Ability")
+        else
         {
-            this.passiveShow();
-        }
-        else if (this.type == "Miscellaneous")
-        {
-            this.miscShow();
-        }
-        else if (this.type == "Consumable")
-        {
-            this.consumableShow();
+            if (this.type === "Active Ability") {
+                this.activeShow();
+            }
+            else if (this.type === "Passive Ability") {
+                this.passiveShow();
+            }
+            else if (this.type === "Miscellaneous") {
+                this.miscShow();
+            }
+            else if (this.type === "Consumable") {
+                this.consumableShow();
+            }
         }
     }
 
 
     // Specific use functions for each item type
-    activeAbilityUse() {
+    activeUse() {
     }
 
-    activeAbilityShow() {
-    }
-
-    async ownedActiveAbilityShow() {
+    activeShow() {
         ChatMessage.create({
             user: game.user._id,
             speaker: ChatMessage.getSpeaker(),
@@ -94,7 +124,7 @@ export class DndItem extends Item {
         });
     }
 
-    async ownedActiveAbilityUse() {
+    async ownedActiveUse() {
         const targetNames = new Set();
         const rolls = await chatTemplateRolls(this, targetNames);
         ChatMessage.create({
@@ -108,21 +138,92 @@ export class DndItem extends Item {
         });
     }
 
+    async ownedActiveShow() {
+        ChatMessage.create({
+            user: game.user._id,
+            speaker: ChatMessage.getSpeaker(),
+            content: `
+                ${chatTemplateHeader(this)}
+                ${chatTemplateDescription(this)}
+            `
+        });
+    }
+
     miscUse() {
     }
 
     miscShow() {
+        ChatMessage.create({
+            user: game.user._id,
+            speaker: ChatMessage.getSpeaker(),
+            content: `
+                ${chatTemplateHeader(this)}
+                ${chatTemplateDescription(this)}
+            `
+        });
     }
 
-    passiveUse() {
+    ownedMiscUse() {
+    }
+
+    ownedMiscShow() {
+        ChatMessage.create({
+            user: game.user._id,
+            speaker: ChatMessage.getSpeaker(),
+            content: `
+                ${chatTemplateHeader(this)}
+                ${chatTemplateDescription(this)}
+            `
+        });
     }
 
     passiveShow() {
+        ChatMessage.create({
+            user: game.user._id,
+            speaker: ChatMessage.getSpeaker(),
+            content: `
+                ${chatTemplateHeader(this)}
+                ${chatTemplateDescription(this)}
+            `
+        });
+    }
+
+    ownedPassiveShow() {
+        ChatMessage.create({
+            user: game.user._id,
+            speaker: ChatMessage.getSpeaker(),
+            content: `
+                ${chatTemplateHeader(this)}
+                ${chatTemplateDescription(this)}
+            `
+        });
     }
 
     consumableUse() {
     }
 
     consumableShow() {
+        ChatMessage.create({
+            user: game.user._id,
+            speaker: ChatMessage.getSpeaker(),
+            content: `
+                ${chatTemplateHeader(this)}
+                ${chatTemplateDescription(this)}
+            `
+        });
+    }
+
+    ownedConsumableUse() {
+    }
+
+    ownedConsumableShow() {
+        ChatMessage.create({
+            user: game.user._id,
+            speaker: ChatMessage.getSpeaker(),
+            content: `
+                ${chatTemplateHeader(this)}
+                ${chatTemplateDescription(this)}
+            `
+        });
     }
 }

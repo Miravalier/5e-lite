@@ -27,7 +27,101 @@
             "subjective_pronoun": "they",
             "possessive_pronoun": "their",
             "death_saves_failed": 0,
-            "death_saves_succeeded": 0
+            "death_saves_succeeded": 0,
+            "size": "Medium",
+            "locked_in": false,
+            "skills": {
+                "athletics": {
+                    "label": "Athletics",
+                    "stat": "Strength",
+                    "value": 0
+                },
+                "acrobatics": {
+                    "label": "Acrobatics",
+                    "stat": "Dexterity",
+                    "value": 0
+                },
+                "sleight": {
+                    "label": "Sleight of Hand",
+                    "stat": "Dexterity",
+                    "value": 0
+                },
+                "stealth": {
+                    "label": "Stealth",
+                    "stat": "Dexterity",
+                    "value": 0
+                },
+                "arcana": {
+                    "label": "Arcana",
+                    "stat": "Intelligence",
+                    "value": 0
+                },
+                "history": {
+                    "label": "History",
+                    "stat": "Intelligence",
+                    "value": 0
+                },
+                "investigation": {
+                    "label": "Investigation",
+                    "stat": "Intelligence",
+                    "value": 0
+                },
+                "nature": {
+                    "label": "Nature",
+                    "stat": "Intelligence",
+                    "value": 0
+                },
+                "religion": {
+                    "label": "Religion",
+                    "stat": "Intelligence",
+                    "value": 0
+                },
+                "animals": {
+                    "label": "Animal Handling",
+                    "stat": "Wisdom",
+                    "value": 0
+                },
+                "insight": {
+                    "label": "Insight",
+                    "stat": "Wisdom",
+                    "value": 0
+                },
+                "medicine": {
+                    "label": "Medicine",
+                    "stat": "Wisdom",
+                    "value": 0
+                },
+                "perception": {
+                    "label": "Perception",
+                    "stat": "Wisdom",
+                    "value": 0
+                },
+                "survival": {
+                    "label": "Survival",
+                    "stat": "Wisdom",
+                    "value": 0
+                },
+                "deception": {
+                    "label": "Deception",
+                    "stat": "Charisma",
+                    "value": 0
+                },
+                "intimidation": {
+                    "label": "Intimidation",
+                    "stat": "Charisma",
+                    "value": 0
+                },
+                "performance": {
+                    "label": "Performance",
+                    "stat": "Charisma",
+                    "value": 0
+                },
+                "persuasion": {
+                    "label": "Persuasion",
+                    "stat": "Charisma",
+                    "value": 0
+                }
+            }
         },
 
         "NPC": {
@@ -52,7 +146,9 @@
             },
             "race": "Human",
             "subjective_pronoun": "they",
-            "possessive_pronoun": "their"
+            "possessive_pronoun": "their",
+            "size": "Medium",
+            "skills": {}
         }
     },
 
@@ -66,22 +162,38 @@
             "action_type": "Standard",
             "usage_phrases": {
                 "example": "${CHARACTER} uses ${ITEM}."
-            }
+            },
+            "isActive": true,
+            "isPassive": false,
+            "isConsumable": false,
+            "isMisc": false
         },
 
         "Passive Ability": {
             "description": "",
-            "triggers": {}
+            "triggers": {},
+            "isActive": false,
+            "isPassive": true,
+            "isConsumable": false,
+            "isMisc": false
         },
 
         "Consumable": {
             "description": "",
             "quantity": 1,
-            "template": {}
+            "template": {},
+            "isActive": false,
+            "isPassive": false,
+            "isConsumable": true,
+            "isMisc": false
         },
 
         "Miscellaneous": {
-            "description": ""
+            "description": "",
+            "isActive": false,
+            "isPassive": false,
+            "isConsumable": false,
+            "isMisc": true
         }
     }
 }

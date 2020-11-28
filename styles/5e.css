@@ -205,8 +205,8 @@ form.item-create div.row {
     margin: 4px;
 }
 
-.dnd .inventory div.item button {
-    flex: 0 0 0px;
+.dnd .inventory div.item a {
+    margin: 4px;
 }
 
 .dnd.sheet nav.sheet-tabs {
@@ -405,4 +405,29 @@ form.item-create div.row {
     white-space: nowrap;
     word-break: break-all;
     line-height: 24px;
+}
+
+.dnd .skill-list {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.dnd .skill-list .skill {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.dnd .skill-list .skill a {
+    margin: 4px;
+}
+
+.dnd .skill-list .skill input.name {
+    flex: 1;
+}
+
+.dnd .skill-list .skill input.value {
+    flex: 0 0 48px;
+    text-align: center;
 }

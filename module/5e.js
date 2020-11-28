@@ -11,7 +11,6 @@ import {
     ActiveAbilitySheet,
     PassiveAbilitySheet,
     ConsumableSheet,
-    WeaponSheet,
     MiscSheet
 } from "./item-sheet.js";
 import { DndCharacterSheet, DndNpcSheet } from "./actor-sheet.js";
@@ -64,7 +63,6 @@ Hooks.once("init", async function() {
     Items.registerSheet("dnd", ActiveAbilitySheet, { makeDefault: true });
     Items.registerSheet("dnd", PassiveAbilitySheet, { makeDefault: true });
     Items.registerSheet("dnd", ConsumableSheet, { makeDefault: true });
-    Items.registerSheet("dnd", WeaponSheet, { makeDefault: true });
     Items.registerSheet("dnd", MiscSheet, { makeDefault: true });
 
     // Register handlebars helpers.

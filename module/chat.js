@@ -410,9 +410,10 @@ export function chatTemplateDescription(source)
 
 export function chatTemplateUsage(source, targetNames)
 {
-    const targetString = oxfordList(Array.from(targetNames));
     const templates = Object.values(source.data.data.usage_phrases);
+    if (templates.length == 0) return "";
     const template = templates[Math.floor(Math.random() * templates.length)];
+    const targetString = oxfordList(Array.from(targetNames));
     const variables = {
         ITEM: source.name,
         ITEM_NAME: source.name,

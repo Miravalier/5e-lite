@@ -1,5 +1,6 @@
 export async function selectTokens(text)
 {
+    game.uitools.hoveredToken = null;
     const selectedTokens = new Set();
 
     document.body.style.cursor = "crosshair";

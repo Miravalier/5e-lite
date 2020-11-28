@@ -12,6 +12,7 @@
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="identity_tab">Identity</a>
         <a class="item" data-tab="stats_tab">Stats</a>
+        <a class="item" data-tab="skills_tab">Skills</a>
         <a class="item" data-tab="items_tab">Items and Abilities</a>
     </nav>
 
@@ -62,6 +63,19 @@
                     <label>Speed</label>
                     <input type="number" name="data.speed" value="{{data.speed}}"/>
                 </div>
+                <div class="attribute">
+                    <label>Size</label>
+                    <select name="data.size">
+                    {{#select data.size}}
+                        <option value="Tiny">Tiny</option>
+                        <option value="Small">Small</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Large">Large</option>
+                        <option value="Huge">Huge</option>
+                        <option value="Gargantuan">Gargantuan</option>
+                    {{/select}}
+                    </select>
+                </div>
                 {{#if isCharacter}}
                 <div class="attribute">
                     <label>Death Saves Failed</label>
@@ -70,6 +84,39 @@
                 <div class="attribute">
                     <label>Death Saves Succeeded</label>
                     <input type="number" name="data.death_saves_succeeded" value="{{data.death_saves_succeeded}}"/>
+                </div>
+                {{/if}}
+                {{#if isNPC}}
+                <div class="attribute">
+                    <label>Challenge Rating</label>
+                    <select name="data.cr">
+                    {{#select data.cr}}
+                        <option value="0">0</option>
+                        <option value="1/8">1/8</option>
+                        <option value="1/4">1/4</option>
+                        <option value="1/2">1/2</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                    {{/select}}
+                    </select>
                 </div>
                 {{/if}}
             </div>
@@ -106,14 +153,50 @@
                 <div class="item" data-item-id="{{item._id}}">
                     <img src="{{item.img}}" class="item-icon"></img>
                     <label>{{item.name}}</label>
-                    <button class="show">Show</button>
-                    <button class="use">Use</button>
-                    <button class="edit">Edit</button>
-                    <button class="delete">Delete</button>
+                    <a class="show"><i class="fas fa-eye"></i></a>
+                    {{#if data.isActive}}
+                    <a class="use"><i class="fas fa-dice-d20"></i></a>
+                    {{/if}}
+                    {{#if data.isConsumable}}
+                    <a class="use"><i class="fas fa-dice-d20"></i></a>
+                    {{/if}}
+                    <a class="edit"><i class="fas fa-edit"></i></a>
+                    <a class="delete"><i class="fas fa-trash"></i></a>
                 </div>
             {{/each}}
             </div>
             <button class="new-item">New Item / Ability</button>
+        </div>
+
+        {{!-- Skills Tab --}}
+        <div class="tab" data-group="primary" data-tab="skills_tab">
+            <div class="skill-list">
+            {{#each actor.data.skills as |skill key|}}
+                <div class="skill" data-key="{{key}}">
+                    <a class="use"><i class="fas fa-dice-d20"></i></a>
+                    <input class="name" type="text" name="data.skills.{{key}}.label"
+                            value="{{skill.label}}"/>
+                    <select class="scaling" name="data.skills.{{key}}.stat">
+                    {{#select skill.stat}}
+                        <option value="Strength">Strength</option>
+                        <option value="Dexterity">Dexterity</option>
+                        <option value="Constitution">Constitution</option>
+                        <option value="Intelligence">Intelligence</option>
+                        <option value="Wisdom">Wisdom</option>
+                        <option value="Charisma">Charisma</option>
+                    {{/select}}
+                    </select>
+                    <input class="value" type="number" name="data.skills.{{key}}.value"
+                            value="{{skill.value}}"/>
+                    {{#if ../isCharacter}}
+                    <input class="prof" type="checkbox" name="data.skills.{{key}}.prof"
+                            {{checked skill.prof}}/>
+                    {{/if}}
+                    <a class="delete-skill"><i class="fas fa-trash"></i></a>
+                </div>
+            {{/each}}
+            </div>
+            <button class="new-skill">New Skill</button>
         </div>
 
         {{!-- Background Tab --}}
@@ -121,26 +204,30 @@
             {{#if isCharacter}}
             <div class="background-field">
                 <label>Race</label>
+                {{#if data.locked_in}}
+                <select name="data.race" disabled>
+                {{else}}
                 <select name="data.race">
+                {{/if}}
                     {{#select data.race}}
+                    <option value="Aarakocra">Aarakocra</option>
+                    <option value="Aasimar">Aasimar</option>
+                    <option value="Centaur">Centaur</option>
                     <option value="Dragonborn">Dragonborn</option>
                     <option value="Dwarf">Dwarf</option>
                     <option value="Elf">Elf</option>
+                    <option value="Genasi">Genasi</option>
                     <option value="Gnome">Gnome</option>
+                    <option value="Goliath">Goliath</option>
                     <option value="Half-Elf">Half-Elf</option>
-                    <option value="Halfling">Halfling</option>
                     <option value="Half-Orc">Half-Orc</option>
+                    <option value="Halfling">Halfling</option>
                     <option value="Human">Human</option>
-                    <option value="Tiefling">Tiefling</option>
                     <option value="Leonin">Leonin</option>
                     <option value="Satyr">Satyr</option>
-                    <option value="Aarakocra">Aarakocra</option>
-                    <option value="Genasi">Genasi</option>
-                    <option value="Goliath">Goliath</option>
-                    <option value="Aasimar">Aasimar</option>
                     <option value="Tabaxi">Tabaxi</option>
+                    <option value="Tiefling">Tiefling</option>
                     <option value="Triton">Triton</option>
-                    <option value="Centaur">Centaur</option>
                     <option value="Warforged">Warforged</option>
                     {{/select}}
                 </select>
@@ -148,7 +235,11 @@
             </div>
             <div class="background-field">
                 <label>Class</label>
+                {{#if data.locked_in}}
+                <select name="data.class" disabled>
+                {{else}}
                 <select name="data.class">
+                {{/if}}
                     {{#select data.class}}
                     <option value="Artificer">Artificer</option>
                     <option value="Barbarian">Barbarian</option>
@@ -174,6 +265,9 @@
                 <input type="text" name="data.race" value="{{data.race}}"/>
             </div>
             {{/if}}
+            {{#unless data.locked_in}}
+            <button class="lock-in">Lock In Class and Race</button>
+            {{/unless}}
             <div class="pronoun-field">
                 <label>Subjective Pronoun (e.g. he, she, they)</label>
                 <input type="text" name="data.subjective_pronoun" value="{{data.subjective_pronoun}}"/>

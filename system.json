@@ -2,7 +2,7 @@
   "name": "5e-lite",
   "title": "5E Lite",
   "description": "One-shot stripped down 5E.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "minimumCoreVersion": "0.7.7",
   "compatibleCoreVersion": "0.7.7",
   "templateVersion": 2,
