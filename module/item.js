@@ -58,6 +58,13 @@ export class DndItem extends Item {
     }
 
     // Item use for any item.
+    cast() {
+        if (!this.actor) return;
+        this.actor.update({
+            "data.mana.value": this.actor.data.data.mana.value - this.data.data.cost
+        });
+    }
+
     use() {
         if (this.type == "Active Ability")
         {

@@ -7,6 +7,7 @@
 // Import Modules
 import { DndActor } from "./actor.js";
 import { DndItem } from "./item.js";
+
 import {
     ActiveAbilitySheet,
     PassiveAbilitySheet,
@@ -14,18 +15,25 @@ import {
     MiscSheet
 } from "./item-sheet.js";
 import { DndCharacterSheet, DndNpcSheet } from "./actor-sheet.js";
+
 import {
-    onCreateChatMessage,
+    onRenderChatMessage,
+    onRenderChatLog,
     onChatExport,
     preChatMessage,
     ErrorMessage
 } from "./chat.js";
+
 import {
     preCreateItem,
     preCreateOwnedItem,
     preCreateActor,
     preCreateToken
 } from "./create-defaults.js";
+
+import {
+    onUpdateCombat
+} from "./combat-tracker.js";
 
 
 /* -------------------------------------------- */
@@ -38,8 +46,10 @@ import {
 Hooks.once("init", async function() {
     console.log(`Initializing 5E-Lite ruleset.`);
 
+    // CONFIG.debug.hooks = true;
+
     CONFIG.Combat.initiative = {
-        formula: "1d20",
+        formula: "1d20+@init",
         decimals: 0
     };
 
@@ -66,15 +76,22 @@ Hooks.once("init", async function() {
     Items.registerSheet("dnd", MiscSheet, { makeDefault: true });
 
     // Register handlebars helpers.
-    /**
-        Handlebars.registerHelper('name', function(value) {
-            return value;
-        });
-    */
+    Handlebars.registerHelper('ifeq', function (a, b, options) {
+        if (a == b) { return options.fn(this); }
+        return options.inverse(this);
+    });
+
+    Handlebars.registerHelper('ifnoteq', function (a, b, options) {
+        if (a != b) { return options.fn(this); }
+        return options.inverse(this);
+    });
+
+    Hooks.on("renderChatLog", (app, html, data) => onRenderChatLog(html));
+    Hooks.on("renderChatMessage", (app, html, data) => onRenderChatMessage(html));
 });
 
 Hooks.once("ready", function() {
-    Hooks.on("renderChatMessage", (app, html, data) => onCreateChatMessage(html, data));
+    Hooks.on("updateCombat", onUpdateCombat);
     Hooks.on("chatMessage", preChatMessage);
     Hooks.on("preCreateItem", preCreateItem);
     Hooks.on("preCreateOwnedItem", preCreateOwnedItem);

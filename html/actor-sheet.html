@@ -11,9 +11,17 @@
     {{!-- Sheet Tab Navigation --}}
     <nav class="sheet-tabs tabs" data-group="primary">
         <a class="item" data-tab="identity_tab">Identity</a>
+        {{#if data.ready}}
         <a class="item" data-tab="stats_tab">Stats</a>
         <a class="item" data-tab="skills_tab">Skills</a>
         <a class="item" data-tab="items_tab">Items and Abilities</a>
+        {{else}}
+            {{#if isNPC}}
+            <a class="item" data-tab="stats_tab">Stats</a>
+            <a class="item" data-tab="skills_tab">Skills</a>
+            <a class="item" data-tab="items_tab">Items and Abilities</a>
+            {{/if}}
+        {{/if}}
     </nav>
 
     {{!-- Sheet Body --}}
@@ -24,26 +32,32 @@
             <div class="attribute-group box scores">
                 <span>Ability Scores</span>
                 <div class="attribute">
+                    <a class="ability-check" data-stat="Strength"><i class="fas fa-dice-d20"></i></a>
                     <label>Strength</label>
                     <input type="number" name="data.strength" value="{{data.strength}}"/>
                 </div>
                 <div class="attribute">
+                    <a class="ability-check" data-stat="Dexterity"><i class="fas fa-dice-d20"></i></a>
                     <label>Dexterity</label>
                     <input type="number" name="data.dexterity" value="{{data.dexterity}}"/>
                 </div>
                 <div class="attribute">
+                    <a class="ability-check" data-stat="Constitution"><i class="fas fa-dice-d20"></i></a>
                     <label>Constitution</label>
                     <input type="number" name="data.constitution" value="{{data.constitution}}"/>
                 </div>
                 <div class="attribute">
+                    <a class="ability-check" data-stat="Intelligence"><i class="fas fa-dice-d20"></i></a>
                     <label>Intelligence</label>
                     <input type="number" name="data.intelligence" value="{{data.intelligence}}"/>
                 </div>
                 <div class="attribute">
+                    <a class="ability-check" data-stat="Wisdom"><i class="fas fa-dice-d20"></i></a>
                     <label>Wisdom</label>
                     <input type="number" name="data.wisdom" value="{{data.wisdom}}"/>
                 </div>
                 <div class="attribute">
+                    <a class="ability-check" data-stat="Charisma"><i class="fas fa-dice-d20"></i></a>
                     <label>Charisma</label>
                     <input type="number" name="data.charisma" value="{{data.charisma}}"/>
                 </div>
@@ -56,6 +70,7 @@
                     <input type="number" name="data.ac" value="{{data.ac}}"/>
                 </div>
                 <div class="attribute">
+                    <a class="initiative-check"><i class="fas fa-dice-d20"></i></a>
                     <label>Initiative</label>
                     <input type="number" name="data.initiative" value="{{data.initiative}}"/>
                 </div>
@@ -63,6 +78,39 @@
                     <label>Speed</label>
                     <input type="number" name="data.speed" value="{{data.speed}}"/>
                 </div>
+                {{#if isNPC}}
+                <div class="attribute">
+                    <label>Climbing Speed</label>
+                    <input type="number" name="data.climbing_speed" value="{{data.climbing_speed}}"/>
+                </div>
+                <div class="attribute">
+                    <label>Swimming Speed</label>
+                    <input type="number" name="data.swimming_speed" value="{{data.swimming_speed}}"/>
+                </div>
+                <div class="attribute">
+                    <label>Flying Speed</label>
+                    <input type="number" name="data.flying_speed" value="{{data.flying_speed}}"/>
+                </div>
+                {{else}}
+                    {{#if data.climbing_speed}}
+                    <div class="attribute">
+                        <label>Climbing Speed</label>
+                        <input type="number" name="data.climbing_speed" value="{{data.climbing_speed}}"/>
+                    </div>
+                    {{/if}}
+                    {{#if data.swimming_speed}}
+                    <div class="attribute">
+                        <label>Swimming Speed</label>
+                        <input type="number" name="data.swimming_speed" value="{{data.swimming_speed}}"/>
+                    </div>
+                    {{/if}}
+                    {{#if data.flying_speed}}
+                    <div class="attribute">
+                        <label>Flying Speed</label>
+                        <input type="number" name="data.flying_speed" value="{{data.flying_speed}}"/>
+                    </div>
+                    {{/if}}
+                {{/if}}
                 <div class="attribute">
                     <label>Size</label>
                     <select name="data.size">
@@ -78,12 +126,10 @@
                 </div>
                 {{#if isCharacter}}
                 <div class="attribute">
-                    <label>Death Saves Failed</label>
-                    <input type="number" name="data.death_saves_failed" value="{{data.death_saves_failed}}"/>
-                </div>
-                <div class="attribute">
-                    <label>Death Saves Succeeded</label>
+                    <a class="death-save"><i class="fas fa-dice-d20"></i></a>
+                    <label>Death Saves</label>
                     <input type="number" name="data.death_saves_succeeded" value="{{data.death_saves_succeeded}}"/>
+                    <input type="number" name="data.death_saves_failed" value="{{data.death_saves_failed}}"/>
                 </div>
                 {{/if}}
                 {{#if isNPC}}
@@ -123,6 +169,12 @@
 
             <div class="attribute-group box hp">
                 <span>HP</span>
+                {{#unless isCharacter}}
+                <div class="attribute">
+                    <label>Formula</label>
+                    <input class="formula" type="text" name="data.hp.formula" value="{{data.hp.formula}}"/>
+                </div>
+                {{/unless}}
                 <div class="attribute">
                     <label>Current</label>
                     <input type="number" name="data.hp.value" value="{{data.hp.value}}"/>
@@ -137,6 +189,21 @@
                 <span>Mana</span>
                 <div class="attribute">
                     <label>Current</label>
+                    <input type="number" value="{{data.mana.value}}" disabled/>
+                </div>
+                <div class="attribute">
+                    <label>Max</label>
+                    <input type="number" value="{{data.mana.max}}" disabled/>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Items and Abilities Tab --}}
+        <div class="tab" data-group="primary" data-tab="items_tab">
+            <div class="attribute-group box mana">
+                <span>Mana</span>
+                <div class="attribute">
+                    <label>Current</label>
                     <input type="number" name="data.mana.value" value="{{data.mana.value}}"/>
                 </div>
                 <div class="attribute">
@@ -144,25 +211,64 @@
                     <input type="number" name="data.mana.max" value="{{data.mana.max}}"/>
                 </div>
             </div>
-        </div>
-
-        {{!-- Items and Abilities Tab --}}
-        <div class="tab" data-group="primary" data-tab="items_tab">
             <div class="inventory">
             {{#each actor.items as |item id|}}
+                {{#if data.isActive}}
                 <div class="item" data-item-id="{{item._id}}">
-                    <img src="{{item.img}}" class="item-icon"></img>
+                    {{#ifeq data.action_type "Standard"}}
+                    <a class="action"><i class="fas fa-circle"></i></a>
+                    {{/ifeq}}
+                    {{#ifeq data.action_type "Bonus"}}
+                    <a class="action"><i class="fas fa-adjust"></i></a>
+                    {{/ifeq}}
+                    {{#ifeq data.action_type "Free"}}
+                    <a class="action"><i class="far fa-circle"></i></a>
+                    {{/ifeq}}
+                    {{#ifeq data.action_type "Reaction"}}
+                    <a class="action"><i class="fas fa-exclamation-circle"></i></a>
+                    {{/ifeq}}
                     <label>{{item.name}}</label>
-                    <a class="show"><i class="fas fa-eye"></i></a>
-                    {{#if data.isActive}}
-                    <a class="use"><i class="fas fa-dice-d20"></i></a>
+                    {{#if data.cost}}
+                    <a class="cast">{{data.cost}}<i class="fas fa-bolt"></i></a>
                     {{/if}}
-                    {{#if data.isConsumable}}
                     <a class="use"><i class="fas fa-dice-d20"></i></a>
-                    {{/if}}
-                    <a class="edit"><i class="fas fa-edit"></i></a>
+                    <a class="show"><i class="fas fa-comment-dots"></i></a>
+                    <a class="edit"><i class="fas fa-eye"></i></a>
                     <a class="delete"><i class="fas fa-trash"></i></a>
                 </div>
+                {{/if}}
+            {{/each}}
+            {{#each actor.items as |item id|}}
+                {{#if data.isConsumable}}
+                <div class="item" data-item-id="{{item._id}}">
+                    <a class="action"><i class="far fa-square"></i></a>
+                    <label>{{item.name}}</label>
+                    <a class="use"><i class="fas fa-dice-d20"></i></a>
+                    <a class="show"><i class="fas fa-comment-dots"></i></a>
+                    <a class="edit"><i class="fas fa-eye"></i></a>
+                    <a class="delete"><i class="fas fa-trash"></i></a>
+                </div>
+                {{/if}}
+            {{/each}}
+            {{#each actor.items as |item id|}}
+                {{#if data.isPassive}}
+                <div class="item" data-item-id="{{item._id}}">
+                    <label>{{item.name}}</label>
+                    <a class="show"><i class="fas fa-comment-dots"></i></a>
+                    <a class="edit"><i class="fas fa-eye"></i></a>
+                    <a class="delete"><i class="fas fa-trash"></i></a>
+                </div>
+                {{/if}}
+            {{/each}}
+            {{#each actor.items as |item id|}}
+                {{#if data.isMisc}}
+                <div class="item" data-item-id="{{item._id}}">
+                    <label>{{item.name}}</label>
+                    <a class="show"><i class="fas fa-comment-dots"></i></a>
+                    <a class="edit"><i class="fas fa-eye"></i></a>
+                    <a class="delete"><i class="fas fa-trash"></i></a>
+                </div>
+                {{/if}}
             {{/each}}
             </div>
             <button class="new-item">New Item / Ability</button>
@@ -178,6 +284,7 @@
                             value="{{skill.label}}"/>
                     <select class="scaling" name="data.skills.{{key}}.stat">
                     {{#select skill.stat}}
+                        <option value="None">None</option>
                         <option value="Strength">Strength</option>
                         <option value="Dexterity">Dexterity</option>
                         <option value="Constitution">Constitution</option>
@@ -191,12 +298,15 @@
                     {{#if ../isCharacter}}
                     <input class="prof" type="checkbox" name="data.skills.{{key}}.prof"
                             {{checked skill.prof}}/>
-                    {{/if}}
+                    {{else}}
                     <a class="delete-skill"><i class="fas fa-trash"></i></a>
+                    {{/if}}
                 </div>
             {{/each}}
             </div>
+            {{#unless isCharacter}}
             <button class="new-skill">New Skill</button>
+            {{/unless}}
         </div>
 
         {{!-- Background Tab --}}
@@ -231,7 +341,7 @@
                     <option value="Warforged">Warforged</option>
                     {{/select}}
                 </select>
-                <span class="race-info">{{{raceInfo}}}</span>
+                <span class="info">{{{raceInfo}}}</span>
             </div>
             <div class="background-field">
                 <label>Class</label>
@@ -256,7 +366,7 @@
                     <option value="Wizard">Wizard</option>
                     {{/select}}
                 </select>
-                <span class="class-info">{{{classInfo}}}</span>
+                <span class="info">{{{classInfo}}}</span>
             </div>
             {{/if}}
             {{#if isNPC}}
@@ -264,10 +374,11 @@
                 <label>Race</label>
                 <input type="text" name="data.race" value="{{data.race}}"/>
             </div>
-            {{/if}}
+            {{else}}
             {{#unless data.locked_in}}
             <button class="lock-in">Lock In Class and Race</button>
             {{/unless}}
+            {{/if}}
             <div class="pronoun-field">
                 <label>Subjective Pronoun (e.g. he, she, they)</label>
                 <input type="text" name="data.subjective_pronoun" value="{{data.subjective_pronoun}}"/>

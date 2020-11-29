@@ -87,5 +87,45 @@ export function preCreateToken(scene, data, options, userId)
         data.displayName = 30;
         data.disposition = -1;
         data.vision = false;
+        if (actor.data.data.hp.formula)
+        {
+            const roll = new Roll(actor.data.data.hp.formula, actor.getRollData());
+            roll.roll();
+            data.actorData = {
+                data: {
+                    hp: {
+                        value: roll.total,
+                        max: roll.total
+                    }
+                }
+            };
+        }
     }
+
+    let size = 1;
+    switch (actor.data.data.size)
+    {
+        case 'Tiny':
+        {
+            size = 0.5;
+        }
+        break;
+        case 'Large':
+        {
+            size = 2;
+        }
+        break;
+        case 'Huge':
+        {
+            size = 3;
+        }
+        break;
+        case 'Gargantuan':
+        {
+            size = 4;
+        }
+        break;
+    }
+    data.width = size;
+    data.height = size;
 }

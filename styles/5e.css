@@ -89,7 +89,9 @@
     margin: 4px;
 }
 .chat-template.caption > img {
+    border: none;
     border-radius: 4px;
+    margin: 2px;
 }
 .chat-template.item {
     display: flex;
@@ -98,8 +100,20 @@
     align-items: center;
     border-bottom: 2px solid rgba(120, 120, 120, 0.5);
 }
-.chat-template.item > * {
-    margin: 4px;
+.chat-template.item.yellow {
+    background: rgba(255, 255, 0, 0.1);
+}
+.chat-template.item.red {
+    background: rgba(255, 0, 0, 0.1);
+}
+.chat-template.item.blue {
+    background: rgba(0, 64, 255, 0.1);
+}
+.chat-template.item.green {
+    background: rgba(0, 200, 0, 0.1);
+}
+.chat-template.item.orange {
+    background: rgba(255, 128, 0, 0.1);
 }
 .chat-template.list {
     border-radius: 5px;
@@ -112,29 +126,11 @@
     text-align: center;
 }
 .chat-template.roll {
-    margin: 0;
-    display: flex;
     width: 50%;
-    flex-flow: column nowrap;
-    justify-content: center;
-    align-items: center;
-}
-.chat-template.roll .chat-template.formula {
-    width: 100%;
-    text-align: center;
-    padding: 4px;
-    color: rgba(128, 128, 128, 0.75);
-    display: none;
-}
-.chat-template.roll .chat-template.total {
+    margin: 0;
     cursor: pointer;
-    width: 100%;
-    text-align: center;
-    padding: 4px;
     background-color: rgba(120, 120, 120, 0.1);
-    font-weight: bold;
-    border: 2px solid rgba(120, 120, 120, 0.5);
-    border-radius: 4px;
+    text-align: center;
 }
 
 div.dnd.system {
@@ -349,7 +345,7 @@ form.item-create div.row {
     margin: 4px 4px 16px 4px;
 }
 
-.dnd .background-field span {
+.dnd .background-field span.info {
     flex: 0 0 100%;
     background: rgba(0, 0, 0, 0.05);
     border-radius: 4px;
@@ -430,4 +426,114 @@ form.item-create div.row {
 .dnd .skill-list .skill input.value {
     flex: 0 0 48px;
     text-align: center;
+}
+
+.roll-results {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.roll-results .formula {
+    margin: 4px;
+    padding: 4px;
+}
+
+.roll-results .result {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.roll-results .term {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    margin: 4px;
+    padding: 4px;
+}
+
+.roll-results .operator {
+    margin: 4px;
+    padding: 4px;
+}
+
+.roll-results .die {
+    font-weight: bold;
+    border-radius: 2px;
+    margin: 4px;
+    padding: 4px;
+    background-image: url("/icons/svg/d6-grey.svg");
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    font-size: 16px;
+    line-height: 24px;
+    width: 24px;
+    text-align: center;
+    padding: 0px;
+}
+
+.roll-results .die.d4 {
+    background-image: url("/icons/svg/d6-grey.svg");
+}
+
+.roll-results .die.d8 {
+    background-image: url("/icons/svg/d8-grey.svg");
+}
+
+.roll-results .die.d10 {
+    background-image: url("/icons/svg/d10-grey.svg");
+}
+
+.roll-results .die.d12 {
+    background-image: url("/icons/svg/d12-grey.svg");
+}
+
+.roll-results .die.d20 {
+    background-image: url("/icons/svg/d20-grey.svg");
+}
+
+.roll-results .die.success {
+    color: #18520b;
+    filter: sepia(0.5) hue-rotate(60deg);
+}
+
+.roll-results .die.failure {
+    color: #aa0200;
+    filter: sepia(0.5) hue-rotate(-60deg);
+}
+
+.roll-results .die.modified {
+    color: #0002aa;
+    filter: sepia(0.5) hue-rotate(180deg);
+}
+
+.roll-controls {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+}
+.roll-controls a {
+    padding: 6px;
+}
+.roll-controls span {
+    margin: 6px;
+}
+
+.dnd.turn-update {
+    text-align: center;
+    font-size: 36px;
+    padding: 2px;
+    border-radius: 4px;
+    color: black;
+    border: 2px solid black;
+    text-shadow: 1px 1px 0 black;
+    box-shadow: 2px 2px 1px black;
+}
+.dnd.round-update {
+    text-align: center;
+    font-size: 24px;
+    color: grey;
 }

@@ -1,7 +1,7 @@
 <form class="flexcol {{cssClass}}" autocomplete="off">
     {{!-- Sheet Header --}}
     <header class="sheet-header">
-        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+        <img class="profile-img" src="{{item.img}}" title="{{item.name}}" />
         <div>
             <label>{{item.type}}</label>
             <h1 class="charname"><input name="name" type="text" value="{{item.name}}" placeholder="Name" /></h1>
@@ -30,7 +30,6 @@
                         <option value="Standard">Standard</option>
                         <option value="Bonus">Bonus</option>
                         <option value="Reaction">Reaction</option>
-                        <option value="Movement">Movement</option>
                         <option value="Free">Free</option>
                         {{/select}}
                     </select>
@@ -45,11 +44,13 @@
                     <span class="select">Target</span>
                     <span class="text">Label</span>
                     <span class="text">Formula</span>
-                    <a class="add-button" data-action="create"><i class="fas fa-plus"></i></a>
+                    <a class="add-button"><i class="fas fa-plus"></i></a>
                 </header>
                 <div class="list">
                 {{#each data.template as |item key|}}
                     <div class="row" data-key="{{key}}">
+                        <a class="up-button"><i class="fas fa-arrow-up"></i></a>
+                        <a class="down-button"><i class="fas fa-arrow-down"></i></a>
                         <select name="data.template.{{key}}.target_type">
                             {{#select item.target_type}}
                             <option value="None">None</option>
@@ -73,7 +74,7 @@
             <div class="phrases">
                 <header class="header">
                     <span class="label">Usage Phrases</span>
-                    <a class="add-button" data-action="create"><i class="fas fa-plus"></i></a>
+                    <a class="add-button"><i class="fas fa-plus"></i></a>
                 </header>
                 <div class="list">
                 {{#each data.usage_phrases as |item key|}}

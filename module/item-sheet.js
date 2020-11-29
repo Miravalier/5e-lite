@@ -60,27 +60,55 @@ export class ActiveAbilitySheet extends DndItemSheet {
         if (!this.options.editable) return;
 
         html.find(".template .add-button").click(async ev => {
-            ev.preventDefault();
             this.storeValue("data.template.$id.label", "Label");
             await this._onSubmit(ev);
         });
 
         html.find(".template .delete-button").click(async ev => {
-            ev.preventDefault();
             const row = ev.target.closest(".row");
             this.deleteValue("data.template", row.dataset.key);
             row.parentElement.removeChild(row);
             await this._onSubmit(ev);
         });
 
+        html.find(".template .up-button").click(async ev => {
+            const row = $(ev.target.closest(".row"));
+            const key = row.data("key");
+            const otherKey = row.prev().data("key");
+            if (!otherKey) return;
+            const template = this.item.data.data.template;
+            const updates = {};
+            updates[`data.template.${key}.target_type`] = template[otherKey].target_type;
+            updates[`data.template.${key}.label`] = template[otherKey].label;
+            updates[`data.template.${key}.formula`] = template[otherKey].formula;
+            updates[`data.template.${otherKey}.target_type`] = template[key].target_type;
+            updates[`data.template.${otherKey}.label`] = template[key].label;
+            updates[`data.template.${otherKey}.formula`] = template[key].formula;
+            this.item.update(updates);
+        });
+
+        html.find(".template .down-button").click(async ev => {
+            const row = $(ev.target.closest(".row"));
+            const key = row.data("key");
+            const otherKey = row.next().data("key");
+            if (!otherKey) return;
+            const template = this.item.data.data.template;
+            const updates = {};
+            updates[`data.template.${key}.target_type`] = template[otherKey].target_type;
+            updates[`data.template.${key}.label`] = template[otherKey].label;
+            updates[`data.template.${key}.formula`] = template[otherKey].formula;
+            updates[`data.template.${otherKey}.target_type`] = template[key].target_type;
+            updates[`data.template.${otherKey}.label`] = template[key].label;
+            updates[`data.template.${otherKey}.formula`] = template[key].formula;
+            this.item.update(updates);
+        });
+
         html.find(".phrases .add-button").click(async ev => {
-            ev.preventDefault();
             this.storeValue("data.usage_phrases.$id");
             await this._onSubmit(ev);
         });
 
         html.find(".phrases .delete-button").click(async ev => {
-            ev.preventDefault();
             const row = ev.target.closest(".row");
             this.deleteValue("data.usage_phrases", row.dataset.key);
             row.parentElement.removeChild(row);
@@ -93,6 +121,12 @@ export class ActiveAbilitySheet extends DndItemSheet {
         const data = super.getData();
         data.isActive = true;
         return data;
+    }
+
+    /** @override */
+    _updateObject(event, formData) {
+        // Update the Actor with the new form values.
+        return this.object.update(formData);
     }
 }
 

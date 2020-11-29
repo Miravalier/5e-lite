@@ -1,3 +1,5 @@
+import {chatTemplateHeader, chatTemplateRow} from "./chat.js";
+
 /* @Item[rVHTJNj69junL7fL]{Infusion: Resistant Armor} */
 const itemLinkRegex = /@Item\[([a-z0-9_-]+)\]\{([^}]+)\}/gi
 function convertItemLinks(content)
@@ -82,6 +84,30 @@ export class DndCharacterSheet extends ActorSheet {
         // Everything below here is only needed if the sheet is editable
         if ( !this.options.editable ) return;
 
+        html.find('.skill-list .skill .use').click(ev => {
+            const rollData = this.actor.getRollData();
+            const node = $(ev.currentTarget).parents(".skill");
+            const skill = this.actor.data.data.skills[node.data("key")];
+            let formula = `1d20+${skill.value}`;
+            if (skill.stat !== "None")
+            {
+                const stat = skill.stat.slice(0, 3).toLowerCase();
+                formula = `1d20+@${stat}+${skill.value}`;
+            }
+            if (skill.prof)
+            {
+                formula += "+@prof";
+            }
+            ChatMessage.create({
+                user: game.user._id,
+                speaker: ChatMessage.getSpeaker(),
+                content: `
+                    ${chatTemplateHeader(this.actor)}
+                    ${chatTemplateRow(skill.label+ " Check", formula, rollData)}
+                `
+            });
+        });
+
         html.find('.inventory .item .show').click(ev => {
             const node = $(ev.currentTarget).parents(".item");
             const item = this.actor.getOwnedItem(node.data("itemId"));
@@ -92,6 +118,12 @@ export class DndCharacterSheet extends ActorSheet {
             const node = $(ev.currentTarget).parents(".item");
             const item = this.actor.getOwnedItem(node.data("itemId"));
             item.use();
+        });
+
+        html.find('.inventory .item .cast').click(ev => {
+            const node = $(ev.currentTarget).parents(".item");
+            const item = this.actor.getOwnedItem(node.data("itemId"));
+            item.cast();
         });
 
         html.find('.inventory .item .edit').click(ev => {
@@ -111,6 +143,33 @@ export class DndCharacterSheet extends ActorSheet {
                 },
                 no: () => {},
                 defaultYes: false
+            });
+        });
+
+        html.find('.ability-check').click(async ev => {
+            const stat = ev.currentTarget.dataset.stat;
+            const rollData = this.actor.getRollData();
+            const formula = `1d20+@${stat.slice(0,3).toLowerCase()}`;
+            ChatMessage.create({
+                user: game.user._id,
+                speaker: ChatMessage.getSpeaker(),
+                content: `
+                    ${chatTemplateHeader(this.actor)}
+                    ${chatTemplateRow(stat + " Check", formula, rollData)}
+                `
+            });
+        });
+
+        html.find('.initiative-check').click(async ev => {
+            const stat = ev.currentTarget.dataset.stat;
+            const rollData = this.actor.getRollData();
+            ChatMessage.create({
+                user: game.user._id,
+                speaker: ChatMessage.getSpeaker(),
+                content: `
+                    ${chatTemplateHeader(this.actor)}
+                    ${chatTemplateRow("Initiative Check", "1d20+@init", rollData)}
+                `
             });
         });
 
