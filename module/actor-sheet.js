@@ -1,4 +1,4 @@
-import {chatTemplateHeader, chatTemplateRow} from "./chat.js";
+import {sendTemplate, chatTemplateHeader, chatTemplateRow} from "./chat.js";
 
 /* @Item[rVHTJNj69junL7fL]{Infusion: Resistant Armor} */
 const itemLinkRegex = /@Item\[([a-z0-9_-]+)\]\{([^}]+)\}/gi
@@ -94,18 +94,10 @@ export class DndCharacterSheet extends ActorSheet {
                 const stat = skill.stat.slice(0, 3).toLowerCase();
                 formula = `1d20+@${stat}+${skill.value}`;
             }
-            if (skill.prof)
-            {
+            if (skill.prof) {
                 formula += "+@prof";
             }
-            ChatMessage.create({
-                user: game.user._id,
-                speaker: ChatMessage.getSpeaker(),
-                content: `
-                    ${chatTemplateHeader(this.actor)}
-                    ${chatTemplateRow(skill.label+ " Check", formula, rollData)}
-                `
-            });
+            this.actor.roll(skill.label + " Check", formula);
         });
 
         html.find('.inventory .item .show').click(ev => {
@@ -148,29 +140,16 @@ export class DndCharacterSheet extends ActorSheet {
 
         html.find('.ability-check').click(async ev => {
             const stat = ev.currentTarget.dataset.stat;
-            const rollData = this.actor.getRollData();
             const formula = `1d20+@${stat.slice(0,3).toLowerCase()}`;
-            ChatMessage.create({
-                user: game.user._id,
-                speaker: ChatMessage.getSpeaker(),
-                content: `
-                    ${chatTemplateHeader(this.actor)}
-                    ${chatTemplateRow(stat + " Check", formula, rollData)}
-                `
-            });
+            this.actor.roll(stat + " Check", formula);
         });
 
-        html.find('.initiative-check').click(async ev => {
-            const stat = ev.currentTarget.dataset.stat;
-            const rollData = this.actor.getRollData();
-            ChatMessage.create({
-                user: game.user._id,
-                speaker: ChatMessage.getSpeaker(),
-                content: `
-                    ${chatTemplateHeader(this.actor)}
-                    ${chatTemplateRow("Initiative Check", "1d20+@init", rollData)}
-                `
-            });
+        html.find('.initiative-check').click(ev => {
+            this.actor.roll("Initiative Check", "1d20+@init");
+        });
+
+        html.find('a.death-save').click(ev => {
+            this.actor.roll("Death Save", "1d20");
         });
 
         html.find('.new-item').click(async ev => {

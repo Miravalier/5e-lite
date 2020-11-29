@@ -1,5 +1,6 @@
 import { selectToken, selectTokens } from "./ui.js";
 import {
+    sendTemplate,
     chatTemplateHeader,
     chatTemplateDescription,
     chatTemplateUsage,
@@ -121,116 +122,80 @@ export class DndItem extends Item {
     }
 
     activeShow() {
-        ChatMessage.create({
-            user: game.user._id,
-            speaker: ChatMessage.getSpeaker(),
-            content: `
-                ${chatTemplateHeader(this)}
-                ${chatTemplateDescription(this)}
-            `
-        });
+        sendTemplate(`
+            ${chatTemplateHeader(this)}
+            ${chatTemplateDescription(this)}
+        `);
     }
 
     async ownedActiveUse() {
         const targetNames = new Set();
         const rolls = await chatTemplateRolls(this, targetNames);
-        ChatMessage.create({
-            user: game.user._id,
-            speaker: ChatMessage.getSpeaker(),
-            content: `
-                ${chatTemplateHeader(this)}
-                ${chatTemplateUsage(this, targetNames)}
-                ${rolls}
-            `
-        });
+        sendTemplate(`
+            ${chatTemplateHeader(this)}
+            ${chatTemplateUsage(this, targetNames)}
+            ${rolls}
+        `);
     }
 
     async ownedActiveShow() {
-        ChatMessage.create({
-            user: game.user._id,
-            speaker: ChatMessage.getSpeaker(),
-            content: `
-                ${chatTemplateHeader(this)}
-                ${chatTemplateDescription(this)}
-            `
-        });
+        sendTemplate(`
+            ${chatTemplateHeader(this)}
+            ${chatTemplateDescription(this)}
+        `);
     }
 
     miscUse() {
     }
 
     miscShow() {
-        ChatMessage.create({
-            user: game.user._id,
-            speaker: ChatMessage.getSpeaker(),
-            content: `
-                ${chatTemplateHeader(this)}
-                ${chatTemplateDescription(this)}
-            `
-        });
+        sendTemplate(`
+            ${chatTemplateHeader(this)}
+            ${chatTemplateDescription(this)}
+        `);
     }
 
     ownedMiscUse() {
     }
 
     ownedMiscShow() {
-        ChatMessage.create({
-            user: game.user._id,
-            speaker: ChatMessage.getSpeaker(),
-            content: `
-                ${chatTemplateHeader(this)}
-                ${chatTemplateDescription(this)}
-            `
-        });
+        sendTemplate(`
+            ${chatTemplateHeader(this)}
+            ${chatTemplateDescription(this)}
+        `);
     }
 
     passiveShow() {
-        ChatMessage.create({
-            user: game.user._id,
-            speaker: ChatMessage.getSpeaker(),
-            content: `
-                ${chatTemplateHeader(this)}
-                ${chatTemplateDescription(this)}
-            `
-        });
+        sendTemplate(`
+            ${chatTemplateHeader(this)}
+            ${chatTemplateDescription(this)}
+        `);
     }
 
     ownedPassiveShow() {
-        ChatMessage.create({
-            user: game.user._id,
-            speaker: ChatMessage.getSpeaker(),
-            content: `
-                ${chatTemplateHeader(this)}
-                ${chatTemplateDescription(this)}
-            `
-        });
+        sendTemplate(`
+            ${chatTemplateHeader(this)}
+            ${chatTemplateDescription(this)}
+        `);
     }
 
     consumableUse() {
     }
 
     consumableShow() {
-        ChatMessage.create({
-            user: game.user._id,
-            speaker: ChatMessage.getSpeaker(),
-            content: `
-                ${chatTemplateHeader(this)}
-                ${chatTemplateDescription(this)}
-            `
-        });
+        sendTemplate(`
+            ${chatTemplateHeader(this)}
+            ${chatTemplateDescription(this)}
+        `);
     }
 
     ownedConsumableUse() {
     }
 
     ownedConsumableShow() {
-        ChatMessage.create({
-            user: game.user._id,
-            speaker: ChatMessage.getSpeaker(),
-            content: `
-                ${chatTemplateHeader(this)}
-                ${chatTemplateDescription(this)}
-            `
-        });
+        sendTemplate(`
+            ${chatTemplateHeader(this)}
+            ${chatTemplateDescription(this)}
+        `);
     }
 }

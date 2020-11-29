@@ -73,26 +73,6 @@
   min-height: 400px;
 }
 
-.chat-template.caption {
-    color: white;
-    text-shadow: 2px 2px black;
-    padding: 3px;
-    background-color: rgba(120, 120, 120, 0.5);
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    font-weight: bold;
-}
-.chat-template.caption > * {
-    margin: 4px;
-}
-.chat-template.caption > img {
-    border: none;
-    border-radius: 4px;
-    margin: 2px;
-}
 .chat-template.item {
     display: flex;
     flex-flow: row wrap;
@@ -100,6 +80,7 @@
     align-items: center;
     border-bottom: 2px solid rgba(120, 120, 120, 0.5);
 }
+
 .chat-template.item.yellow {
     background: rgba(255, 255, 0, 0.1);
 }
@@ -115,15 +96,15 @@
 .chat-template.item.orange {
     background: rgba(255, 128, 0, 0.1);
 }
-.chat-template.list {
-    border-radius: 5px;
-    background-color: rgba(200, 200, 200, 0.5);
-}
+
 .chat-template.label {
     margin: 0;
-    font-weight: bold;
     width: 50%;
     text-align: center;
+}
+.chat-template.description {
+    text-align: center;
+    font-style: italic;
 }
 .chat-template.roll {
     width: 50%;
@@ -131,6 +112,7 @@
     cursor: pointer;
     background-color: rgba(120, 120, 120, 0.1);
     text-align: center;
+    font-weight: bold;
 }
 
 div.dnd.system {
@@ -373,12 +355,18 @@ form.item-create div.row {
     border: none;
 }
 
+.chat-message img {
+    border: none;
+}
+
+.chat-message a.entity-link,
 .journal-sheet a.entity-link,
 .actor.sheet a.entity-link,
 .item.sheet a.entity-link {
     line-height: 24px;
 }
 
+.chat-message a.entity-link i,
 .journal-sheet a.entity-link i,
 .actor.sheet a.entity-link i,
 .item.sheet a.entity-link i {
@@ -536,4 +524,19 @@ form.item-create div.row {
     text-align: center;
     font-size: 24px;
     color: grey;
+}
+
+.dnd .attribute input.death-save-success {
+    background: rgba(0, 255, 0, 0.05);
+}
+
+.dnd .attribute input.death-save-fail {
+    background: rgba(255, 0, 0, 0.05);
+}
+
+.chat-message .chat-template.caption {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 6px;
 }

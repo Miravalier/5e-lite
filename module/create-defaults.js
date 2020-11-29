@@ -12,14 +12,11 @@ export function preCreateItem(data, options, userId)
     {
         data.img = "systems/5e-lite/images/unknown-passive.png";
     }
-    else if (data.type == "Weapon")
-    {
-        data.img = "systems/5e-lite/images/unknown-weapon.png";
-    }
     else
     {
         data.img = "systems/5e-lite/images/unknown-misc.png";
     }
+    data.permission = {'default': ENTITY_PERMISSIONS.OBSERVER};
 }
 
 export function preCreateOwnedItem(actor, data, options, userId)
@@ -38,20 +35,22 @@ export function preCreateOwnedItem(actor, data, options, userId)
         {
             data.img = "systems/5e-lite/images/unknown-passive.png";
         }
-        else if (data.type == "Weapon")
-        {
-            data.img = "systems/5e-lite/images/unknown-weapon.png";
-        }
         else
         {
             data.img = "systems/5e-lite/images/unknown-misc.png";
         }
     }
+    data.permission = {'default': ENTITY_PERMISSIONS.OBSERVER};
 }
 
 export function preCreateActor(data, options, userId)
 {
     data.img = "Players/default_image.svg";
+    if (data.type === "Character")
+    {
+        console.log(data);
+        data.permission = {'default': ENTITY_PERMISSIONS.OBSERVER};
+    }
 }
 
 export function preCreateToken(scene, data, options, userId)

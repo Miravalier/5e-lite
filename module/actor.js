@@ -1,5 +1,6 @@
 import {CLASS_DATA} from "./constants.js";
 import {raceItems, classItems} from "./item.js";
+import {sendTemplate, chatTemplateHeader, chatTemplateRow} from "./chat.js";
 
 
 /**
@@ -107,5 +108,14 @@ export class DndActor extends Actor {
         }
 
         return data;
+    }
+
+
+    roll(label, formula) {
+        const rollData = this.getRollData();
+        sendTemplate(`
+            ${chatTemplateHeader(this)}
+            ${chatTemplateRow(label, formula, rollData)}
+        `);
     }
 }

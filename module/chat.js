@@ -602,6 +602,18 @@ export async function chatTemplateRolls(source, targetNames)
 }
 
 
+export function sendTemplate(content)
+{
+    let speaker = ChatMessage.getSpeaker();
+    speaker.alias = game.user.name;
+    ChatMessage.create({
+        user: game.user._id,
+        speaker: speaker,
+        content: content
+    });
+}
+
+
 export function chatTemplateRow(label, formula, rollData)
 {
     if (!rollData) rollData = {};
@@ -677,10 +689,5 @@ export function chatTemplateRow(label, formula, rollData)
 
 export function chatTemplateHeader(source)
 {
-    return dedent(`
-        <div class="chat-template caption">
-            <img src="${source.img}" title="Roll Icon" width="36" height="36" />
-            <span>${source.name}</span>
-        </div>
-    `);
+    return `<div class="chat-template caption">${source.name}</div>`;
 }

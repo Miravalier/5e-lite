@@ -128,8 +128,8 @@
                 <div class="attribute">
                     <a class="death-save"><i class="fas fa-dice-d20"></i></a>
                     <label>Death Saves</label>
-                    <input type="number" name="data.death_saves_succeeded" value="{{data.death_saves_succeeded}}"/>
-                    <input type="number" name="data.death_saves_failed" value="{{data.death_saves_failed}}"/>
+                    <input class="death-save-success" type="number" name="data.death_saves_succeeded" value="{{data.death_saves_succeeded}}"/>
+                    <input class="death-save-fail" type="number" name="data.death_saves_failed" value="{{data.death_saves_failed}}"/>
                 </div>
                 {{/if}}
                 {{#if isNPC}}
@@ -216,16 +216,16 @@
                 {{#if data.isActive}}
                 <div class="item" data-item-id="{{item._id}}">
                     {{#ifeq data.action_type "Standard"}}
-                    <a class="action"><i class="fas fa-circle"></i></a>
+                    <a class="use"><i class="fas fa-circle"></i></a>
                     {{/ifeq}}
                     {{#ifeq data.action_type "Bonus"}}
-                    <a class="action"><i class="fas fa-adjust"></i></a>
+                    <a class="use"><i class="fas fa-adjust"></i></a>
                     {{/ifeq}}
                     {{#ifeq data.action_type "Free"}}
-                    <a class="action"><i class="far fa-circle"></i></a>
+                    <a class="use"><i class="far fa-circle"></i></a>
                     {{/ifeq}}
                     {{#ifeq data.action_type "Reaction"}}
-                    <a class="action"><i class="fas fa-exclamation-circle"></i></a>
+                    <a class="use"><i class="fas fa-exclamation-circle"></i></a>
                     {{/ifeq}}
                     <label>{{item.name}}</label>
                     {{#if data.cost}}
