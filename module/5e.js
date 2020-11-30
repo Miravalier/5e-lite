@@ -58,6 +58,7 @@ Hooks.once("init", async function() {
         OwnedItemMacro,
         ItemMacro,
         SetNPCNames,
+        ErrorMessage,
         emoji: {
         }
     };
