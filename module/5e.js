@@ -49,14 +49,15 @@ Hooks.once("init", async function() {
     // CONFIG.debug.hooks = true;
 
     CONFIG.Combat.initiative = {
-        formula: "1d20+@init",
-        decimals: 0
+        formula: "1d20+@init + (@dexterity/100)",
+        decimals: 2
     };
 
     game.dnd = {
         ActorMacro,
         OwnedItemMacro,
         ItemMacro,
+        SetNPCNames,
         emoji: {
         }
     };
@@ -166,5 +167,31 @@ function OwnedItemMacro(actor_id, item_id)
     }
     catch {
         console.error("Either the actor or item this macro references no longer exist.");
+    }
+}
+
+function SetNPCNames()
+{
+    const originals = {};
+    const counts = {};
+    const updates = {};
+    canvas.tokens.ownedTokens.filter(t => t.actor.data.type === "NPC").forEach(token => {
+        let i = counts[token.actor.name];
+        if (!i) {
+            i = 1;
+            originals[token.actor.name] = token;
+            updates[token.id] = token.actor.name;
+        }
+        else {
+            updates[token.id] = token.actor.name + " " + i;
+        }
+        if (i == 2) {
+            updates[originals[token.actor.name].id] = token.actor.name + " 1";
+        }
+        counts[token.actor.name] = i + 1;
+    });
+    for (const [key, value] of Object.entries(updates))
+    {
+        canvas.tokens.get(key).update({name: value});
     }
 }

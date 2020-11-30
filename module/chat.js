@@ -621,9 +621,12 @@ export function chatTemplateRow(label, formula, rollData)
         const roll = new Roll(formula, rollData);
         roll.roll();
         const resultData = [];
+        let crit = true;
         for (const die of roll.dice) {
             const rolls = die.results;
             rolls.forEach(r => {
+                if (r.result != die.faces)
+                    crit = false;
                 // Fail or success coloring
                 if (r.result == 1)
                     r.classes = "failure";
@@ -653,13 +656,19 @@ export function chatTemplateRow(label, formula, rollData)
             original: formula,
             formula: roll.formula,
             total: roll.total,
-            results: resultData
+            results: resultData,
+            crit: crit
         }));
         let color = "";
-        if (label.toLowerCase().indexOf("attack") !== -1)
-            color = "yellow";
-        else if (label.toLowerCase().indexOf("damage") !== -1)
+        if (label.toLowerCase().indexOf("damage") !== -1)
             color = "red";
+        else if (label.toLowerCase().indexOf("attack") !== -1)
+        {
+            color = "yellow";
+            if (crit) {
+                color += " crit";
+            }
+        }
         else if (label.toLowerCase().indexOf("ac") !== -1)
             color = "blue";
         else if (label.toLowerCase().indexOf("dc") !== -1)

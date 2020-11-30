@@ -54,6 +54,7 @@ export class DndActor extends Actor {
             data_updates["data.speed"] = 35;
         }
         else if (race === "Centaur") {
+            data_updates["data.size"] = "Large";
             data_updates["data.speed"] = 40;
         }
 
@@ -62,6 +63,13 @@ export class DndActor extends Actor {
             data_updates[`data.skills.${skill}.prof`] = true;
         });
 
+        // If bard or rogue, add expertise
+        if (cls === "bard" || cls === "rogue")
+        {
+            classData.trainedSkills.forEach(skill => {
+                data_updates[`data.skills.${skill}.value`] = 3;
+            });
+        }
 
         // Add new race and class items
         for (let item of raceItems(race)) {

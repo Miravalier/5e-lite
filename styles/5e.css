@@ -115,6 +115,10 @@
     font-weight: bold;
 }
 
+.chat-template.item.crit .roll {
+    color: green;
+}
+
 div.dnd.system {
     color: #000000;
     background-color: rgba(100, 100, 100, 0.5);

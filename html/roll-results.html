@@ -20,16 +20,16 @@
     </div>
     {{/each}}
 </div>
-{{#if isGM}}
 <div class="roll-controls">
-    <a class="zero"><i class="fas fa-ban"></i></a>
-    <a class="increment"><i class="fas fa-angle-up"></i></a>
-    <a class="decrement"><i class="fas fa-angle-down"></i></a>
-    <a class="halve"><i class="fas fa-unlink"></i></a>
-    <a class="double"><i class="fas fa-clone"></i></a>
-    <a class="reset"><i class="fas fa-undo"></i></a>
+    <a title="Zero" class="zero"><i class="fas fa-ban"></i></a>
+    <a title="+1" class="increment"><i class="fas fa-angle-up"></i></a>
+    <a title="-1" class="decrement"><i class="fas fa-angle-down"></i></a>
+    <a title="Halve" class="halve"><i class="fas fa-unlink"></i></a>
+    <a title="Double" class="double"><i class="fas fa-clone"></i></a>
+    <a title="Reset" class="reset"><i class="fas fa-undo"></i></a>
     <span class="separator"></span>
-    <a class="add"><i class="fas fa-plus"></i></a>
-    <a class="delete"><i class="fas fa-trash"></i></a>
+    <a title="Re-Roll" class="add"><i class="fas fa-plus"></i></a>
+    {{#if isGM}}
+    <a title="Delete Roll" class="delete"><i class="fas fa-trash"></i></a>
+    {{/if}}
 </div>
-{{/if}}
