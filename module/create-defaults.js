@@ -40,7 +40,6 @@ export function preCreateOwnedItem(actor, data, options, userId)
             data.img = "systems/5e-lite/images/unknown-misc.png";
         }
     }
-    data.permission = {'default': ENTITY_PERMISSIONS.OBSERVER};
 }
 
 export function preCreateActor(data, options, userId)
