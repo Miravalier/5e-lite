@@ -16,7 +16,7 @@ export function preCreateItem(data, options, userId)
     {
         data.img = "systems/5e-lite/images/unknown-misc.png";
     }
-    data.permission = {'default': ENTITY_PERMISSIONS.OBSERVER};
+    data.permission = {'default': ENTITY_PERMISSIONS.LIMITED};
 }
 
 export function preCreateOwnedItem(actor, data, options, userId)
@@ -48,7 +48,7 @@ export function preCreateActor(data, options, userId)
     if (data.type === "Character")
     {
         console.log(data);
-        data.permission = {'default': ENTITY_PERMISSIONS.OBSERVER};
+        data.permission = {'default': ENTITY_PERMISSIONS.LIMITED};
     }
 }
 
@@ -61,15 +61,6 @@ export function preCreateToken(scene, data, options, userId)
     data.bar1 = {attribute: "hp"};
     data.bar2 = {attribute: "mana"};
 
-    data.lightAlpha = 1;
-    data.lightAngle = 360;
-    data.lightColor = "#fffbe0";
-
-    data.brightLight = 0;
-    data.brightSight = 100;
-    data.dimLight = 0;
-    data.dimSight = 100;
-
     if (actor.data.type === "Character")
     {
         data.actorLink = true;
@@ -77,6 +68,15 @@ export function preCreateToken(scene, data, options, userId)
         data.displayName = 30;
         data.disposition = 1;
         data.vision = true;
+
+        data.lightAlpha = 1;
+        data.lightAngle = 360;
+        data.lightColor = "#fffbe0";
+
+        data.brightLight = 0;
+        data.brightSight = 100;
+        data.dimLight = 0;
+        data.dimSight = 100;
     }
     else if (actor.data.type === "NPC")
     {

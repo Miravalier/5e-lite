@@ -14,9 +14,14 @@ export function pingCombatant()
     const token = actor.getActiveTokens().find(t => t.id === combat.combatant.token._id);
     if (token) {
         token.setTarget(true);
+        canvas.animatePan({
+            x: token.x + (token.width / 2),
+            y: token.y + (token.height / 2),
+            duration: 500
+        });
         setTimeout(() => {
             token.setTarget(false);
-        }, 2500);
+        }, 2000);
     }
 }
 
@@ -32,12 +37,15 @@ function turnAdvance(combat, turn)
 
 export function onUpdateCombat(combat, update, options, userId)
 {
-    console.log(combat.current.round, combat.current.turn);
-    console.log(update);
     if (!game.user.isGM) return;
     if (!combat.combatant) return;
 
     pingCombatant();
+
+    if (combat.combatant.token.name == game.dnd.combatant)
+    {
+        return;
+    }
 
     if (update.round)
     {
@@ -49,4 +57,5 @@ export function onUpdateCombat(combat, update, options, userId)
         turnAdvance(combat, update.turn);
     }
 
+    game.dnd.combatant = combat.combatant.token.name;
 }

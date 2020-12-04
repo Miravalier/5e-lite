@@ -119,6 +119,10 @@
     color: green;
 }
 
+.chat-template.item.fail .roll {
+    color: #960000;
+}
+
 div.dnd.system {
     color: #000000;
     background-color: rgba(100, 100, 100, 0.5);

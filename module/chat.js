@@ -622,9 +622,12 @@ export function chatTemplateRow(label, formula, rollData)
         roll.roll();
         const resultData = [];
         let crit = true;
+        let fail = true;
         for (const die of roll.dice) {
             const rolls = die.results;
             rolls.forEach(r => {
+                if (r.result != 1)
+                    fail = false;
                 if (r.result != die.faces)
                     crit = false;
                 // Fail or success coloring
@@ -667,6 +670,9 @@ export function chatTemplateRow(label, formula, rollData)
             color = "yellow";
             if (crit) {
                 color += " crit";
+            }
+            else if (fail) {
+                color += " fail";
             }
         }
         else if (label.toLowerCase().indexOf("ac") !== -1)

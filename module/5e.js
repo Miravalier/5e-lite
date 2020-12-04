@@ -9,6 +9,11 @@ import { DndActor } from "./actor.js";
 import { DndItem } from "./item.js";
 
 import {
+    findPath,
+    checkCollision
+} from "./ai.js";
+
+import {
     ActiveAbilitySheet,
     PassiveAbilitySheet,
     ConsumableSheet,
@@ -59,6 +64,8 @@ Hooks.once("init", async function() {
         ItemMacro,
         SetNPCNames,
         ErrorMessage,
+        findPath,
+        checkCollision,
         emoji: {
         }
     };
@@ -125,7 +132,7 @@ async function createMacro(bar, data, slot) {
     }
     else
     {
-        throw "Invalid macro drop source.";
+        return;
     }
 
     let macro = game.macros.entities.find(m => (m.data.command === command));
