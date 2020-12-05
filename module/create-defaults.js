@@ -59,31 +59,28 @@ export function preCreateToken(scene, data, options, userId)
     data.name = actor.name;
     data.img = actor.img;
     data.bar1 = {attribute: "hp"};
-    data.bar2 = {attribute: "mana"};
+    if (actor.data.data.mana.max)
+    {
+        data.bar2 = {attribute: "mana"};
+    }
 
     if (actor.data.type === "Character")
     {
         data.actorLink = true;
-        data.displayBars = 30;
-        data.displayName = 30;
-        data.disposition = 1;
+        data.displayBars = TOKEN_DISPLAY_MODES.ALWAYS;
+        data.displayName = TOKEN_DISPLAY_MODES.HOVER;
+        data.disposition = TOKEN_DISPOSITIONS.FRIENDLY;
         data.vision = true;
 
-        data.lightAlpha = 1;
-        data.lightAngle = 360;
-        data.lightColor = "#fffbe0";
-
-        data.brightLight = 0;
         data.brightSight = 100;
-        data.dimLight = 0;
         data.dimSight = 100;
     }
     else if (actor.data.type === "NPC")
     {
         data.actorLink = false;
-        data.displayBars = 20;
-        data.displayName = 30;
-        data.disposition = -1;
+        data.displayBars = TOKEN_DISPLAY_MODES.OWNER;
+        data.displayName = TOKEN_DISPLAY_MODES.HOVER;
+        data.disposition = TOKEN_DISPOSITIONS.HOSTILE;
         data.vision = false;
         if (actor.data.data.hp.formula)
         {

@@ -244,6 +244,13 @@ form.item-create div.row {
     background: rgba(0, 255, 255, 0.05);
 }
 
+.dnd .backstory {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    padding: 0px 4px;
+    min-height: 64px;
+}
+
 .dnd .attribute {
     display: flex;
     flex-flow: row nowrap;

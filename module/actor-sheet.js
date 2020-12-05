@@ -140,8 +140,8 @@ export class DndCharacterSheet extends ActorSheet {
 
         html.find('.ability-check').click(async ev => {
             const stat = ev.currentTarget.dataset.stat;
-            const formula = `1d20+@${stat.slice(0,3).toLowerCase()}`;
-            this.actor.roll(stat + " Check", formula);
+            const formula = `1d20+@${stat.slice(0,3).toLowerCase()}_save`;
+            this.actor.roll(stat + " Save", formula);
         });
 
         html.find('.initiative-check').click(ev => {
