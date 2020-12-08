@@ -10,7 +10,8 @@ import { DndItem } from "./item.js";
 
 import {
     findPath,
-    checkCollision
+    checkCollision,
+    autoMove
 } from "./ai.js";
 
 import {
@@ -66,6 +67,7 @@ Hooks.once("init", async function() {
         ErrorMessage,
         findPath,
         checkCollision,
+        autoMove,
         emoji: {
         }
     };
@@ -90,7 +92,7 @@ Hooks.once("init", async function() {
         return options.inverse(this);
     });
 
-    Handlebars.registerHelper('ifnoteq', function (a, b, options) {
+    Handlebars.registerHelper('ifneq', function (a, b, options) {
         if (a != b) { return options.fn(this); }
         return options.inverse(this);
     });

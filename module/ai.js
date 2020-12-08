@@ -8,6 +8,11 @@ function pointEq(src, dst)
     return src.x == dst.x && src.y == dst.y;
 }
 
+function distance(a, b)
+{
+    return ((a.x - b.x)**2 + (a.y - b.y)**2) ** 0.5;
+}
+
 function closer(a, b, dst)
 {
     let aDist = (a.x - dst.x)**2 + (a.y - dst.y)**2;
@@ -51,7 +56,9 @@ export function checkCollision(source, destination)
     ));
 }
 
-export function findPath(source, destination, maxDepth)
+const adjacencies = [[-1, 0], [1, 0], [0, 1], [0, -1]]
+
+export function findPath(source, destination, maxDistance, maxDepth)
 {
     if (!maxDepth) maxDepth = 25;
     source = {
@@ -82,12 +89,14 @@ export function findPath(source, destination, maxDepth)
                 break outerLoop;
             }
             // Check all neighbors for pathability
-            for (let i=0; i < 9; i++)
+            const neighbors = [
+                {x: node.x + 100, y: node.y},
+                {x: node.x - 100, y: node.y},
+                {x: node.x, y: node.y + 100},
+                {x: node.x, y: node.y - 100}
+            ];
+            for (const neighbor of neighbors)
             {
-                if (i == 4) continue;
-                let xDelta = (Math.floor(i/3) - 1) * 100;
-                let yDelta = (i%3 - 1) * 100;
-                let neighbor = {x: node.x + xDelta, y: node.y + yDelta};
                 // If this node has not been visited, isn't blocked by wall,
                 // and isn't occupied.
                 if (!previousNodes[nodeToKey(neighbor)]
@@ -112,6 +121,19 @@ export function findPath(source, destination, maxDepth)
         path.unshift(previousNodes[nodeToKey(node)]);
         node = previousNodes[nodeToKey(node)];
     }
+
+    // Limit the path to the maxDistance
+    if (maxDistance)
+    {
+        let distanceTraveled = 0;
+        for (let i=1; i < path.length; i++)
+        {
+            distanceTraveled += distance(path[i - 1], path[i]);
+            if (distanceTraveled > maxDistance) {
+                path.splice(i, path.length - i);
+            }
+        }
+    }
     // Simplify the path
     for (let i=0; i < path.length - 2;)
     {
@@ -126,4 +148,65 @@ export function findPath(source, destination, maxDepth)
     }
     // Return the path
     return path;
+}
+
+export function autoMove(actorId, tokenId, criterion)
+{
+    const currentActor = game.actors.get(actorId);
+    const currentToken = currentActor.getActiveTokens().find(token => token.id == tokenId);
+    if (!currentActor || !currentToken)
+    {
+		game.dnd.ErrorMessage("Failed to resolve token or actor.");
+        return;
+    }
+
+	// Find the nearest potential combatant
+	const potentialCombatants = Array.from(game.combat.combatants.filter(criterion));
+	let closestCombatant = null;
+	let leastDistance = null;
+	potentialCombatants.forEach(combatant => {
+		const distance = (combatant.token.x - currentToken.x)**2 + (combatant.token.y - currentToken.y)**2;
+		if (closestCombatant === null || distance < leastDistance) {
+			closestCombatant = combatant;
+			leastDistance = distance;
+		}
+	});
+	if (closestCombatant === null)
+	{
+		game.dnd.ErrorMessage("No combatants meet the given criterion.");
+        return;
+	}
+
+    const path = game.dnd.findPath(currentToken, closestCombatant.token, currentActor.movementRange);
+
+    // Update token's position
+    currentToken.update({
+    	x: path[path.length - 1].x,
+    	y: path[path.length - 1].y
+    });
+}
+
+export function autoAttack(actorId, itemCriterion, targetCriterion)
+{
+    const actor = game.actors.get(actorId);
+	const options = Array.from(actor.getEmbeddedCollection("OwnedItem").filter(itemCriterion));
+	const attack = actor.getOwnedItem(options[Math.floor(Math.random() * options.length)]._id);
+
+	const potentialTargets = Array.from(game.combat.combatants.filter(targetCriterion));
+	let target = null;
+	let bestMetric = null;
+	potentialCombatants.forEach(combatant => {
+		const metric = (combatant.token.x - currentToken.x)**2 + (combatant.token.y - currentToken.y)**2;
+		if (target === null || metric < bestMetric) {
+            target = combatant;
+            bestMetric = metric;
+		}
+	});
+	if (target === null)
+	{
+		game.dnd.ErrorMessage("No combatants meet the given criterion.");
+        return;
+	}
+
+    attack.use(target);
 }

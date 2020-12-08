@@ -66,21 +66,21 @@ export class DndItem extends Item {
         });
     }
 
-    use() {
+    use(target) {
         if (this.type == "Active Ability")
         {
             if (this.actor)
             {
-                this.ownedActiveUse();
+                this.ownedActiveUse(target);
             }
             else
             {
-                this.activeUse();
+                this.activeUse(target);
             }
         }
         else if (this.type == "Consumable")
         {
-            this.consumableUse();
+            this.consumableUse(target);
         }
     }
 

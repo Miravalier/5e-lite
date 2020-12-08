@@ -126,4 +126,13 @@ export class DndActor extends Actor {
             ${chatTemplateRow(label, formula, rollData)}
         `);
     }
+
+    get movementRange() {
+        return Math.max(
+            currentActor.data.data.speed || 0,
+            currentActor.data.data.climbing_speed || 0,
+            currentActor.data.data.flying_speed || 0,
+            currentActor.data.data.swimming_speed || 0,
+        ) * 20;
+    }
 }
